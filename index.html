@@ -1,0 +1,3425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Un petit endroit pour toi 💗</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+    --pink: #ff91b9;
+    --pink-light: #ffc6da;
+    --purple: #ad91ff;
+
+    --background: #0c0812;
+    --background-2: #171021;
+
+    --white: #fff;
+    --text: #f8edf4;
+    --muted: #bbaab8;
+
+    --glass: rgba(255,255,255,.065);
+    --glass-hover: rgba(255,255,255,.105);
+    --border: rgba(255,255,255,.12);
+
+    --shadow: rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: "DM Sans", sans-serif;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,105,160,.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(123,91,255,.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            var(--background),
+            var(--background-2),
+            var(--background)
+        );
+
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   LOADING SCREEN
+========================================================= */
+
+#loadingScreen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    background:
+        radial-gradient(
+            circle,
+            #261529,
+            #0b0710
+        );
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#loadingScreen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-heart {
+    font-size: 70px;
+
+    animation:
+        heartbeat 1.2s infinite,
+        loadingFloat 2s ease-in-out infinite;
+}
+
+.loading-text {
+    margin-top: 25px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.loading-dots {
+    margin-top: 12px;
+
+    color: var(--pink);
+
+    letter-spacing: 5px;
+}
+
+@keyframes heartbeat {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.15);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes loadingFloat {
+
+    0%, 100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -12px;
+    }
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background {
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    opacity: .2;
+
+    animation: orbMove 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    width: 350px;
+    height: 350px;
+
+    background: #ff4f95;
+
+    left: -120px;
+    top: -100px;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+
+    background: #714fff;
+
+    right: -160px;
+    bottom: -150px;
+
+    animation-delay: -7s;
+}
+
+.orb-3 {
+    width: 250px;
+    height: 250px;
+
+    background: #ff9fc4;
+
+    left: 45%;
+    top: 40%;
+
+    opacity: .07;
+
+    animation-delay: -11s;
+}
+
+@keyframes orbMove {
+
+    from {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate(100px,70px)
+            scale(1.25);
+    }
+}
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particle {
+    position: absolute;
+
+    bottom: -40px;
+
+    opacity: 0;
+
+    animation:
+        particleFloat linear forwards;
+}
+
+@keyframes particleFloat {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .6;
+    }
+
+    85% {
+        opacity: .35;
+    }
+
+    100% {
+        transform:
+            translateY(-115vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   CURSEUR
+========================================================= */
+
+.cursor-glow {
+    position: fixed;
+
+    width: 220px;
+    height: 220px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,150,190,.09),
+            transparent 65%
+        );
+
+    transform:
+        translate(-50%, -50%);
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    position: fixed;
+
+    top: 18px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(900px, 90%);
+
+    z-index: 100;
+
+    padding: 10px 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 100px;
+
+    background:
+        rgba(15,10,22,.65);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.2);
+}
+
+.logo {
+    font-family: "Pacifico", cursive;
+
+    font-size: 19px;
+
+    color: var(--pink-light);
+
+    padding-left: 10px;
+}
+
+.nav-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+.nav-btn {
+    border: none;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.07);
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.nav-btn:hover {
+    background:
+        rgba(255,255,255,.15);
+
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+    position: relative;
+
+    z-index: 3;
+
+    width: min(1120px, 92%);
+
+    margin: auto;
+
+    padding:
+        140px 0
+        60px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    text-align: center;
+
+    min-height: 75vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    animation: heroAppear 1.2s ease;
+}
+
+@keyframes heroAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+.hero-label {
+    color: var(--pink-light);
+
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-family: "Pacifico", cursive;
+
+    font-size:
+        clamp(55px, 10vw, 110px);
+
+    font-weight: 400;
+
+    line-height: 1.1;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #ffadc9,
+            #c4b0ff,
+            #fff
+        );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+        gradientText 7s ease infinite;
+}
+
+@keyframes gradientText {
+
+    0%,100% {
+        background-position: 0%;
+    }
+
+    50% {
+        background-position: 100%;
+    }
+}
+
+.hero p {
+    max-width: 680px;
+
+    margin-top: 30px;
+
+    color: var(--muted);
+
+    line-height: 1.9;
+
+    font-size: 15px;
+}
+
+.scroll-down {
+    margin-top: 45px;
+
+    color: #8d7b89;
+
+    font-size: 12px;
+
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.section-title span {
+    color: var(--pink-light);
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+.section-title h2 {
+    margin-top: 10px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 45px;
+
+    font-weight: 600;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.card {
+    position: relative;
+
+    min-height: 220px;
+
+    padding: 28px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.035)
+        );
+
+    backdrop-filter: blur(18px);
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        background .4s,
+        border-color .4s,
+        box-shadow .4s;
+
+    animation: cardAppear .8s ease both;
+}
+
+.card:nth-child(1) { animation-delay: .05s; }
+.card:nth-child(2) { animation-delay: .1s; }
+.card:nth-child(3) { animation-delay: .15s; }
+.card:nth-child(4) { animation-delay: .2s; }
+.card:nth-child(5) { animation-delay: .25s; }
+.card:nth-child(6) { animation-delay: .3s; }
+.card:nth-child(7) { animation-delay: .35s; }
+.card:nth-child(8) { animation-delay: .4s; }
+.card:nth-child(9) { animation-delay: .45s; }
+.card:nth-child(10) { animation-delay: .5s; }
+.card:nth-child(11) { animation-delay: .55s; }
+.card:nth-child(12) { animation-delay: .6s; }
+
+@keyframes cardAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+.card:hover {
+
+    transform:
+        translateY(-10px);
+
+    background:
+        var(--glass-hover);
+
+    border-color:
+        rgba(255,170,205,.3);
+
+    box-shadow:
+        0 25px 60px
+        rgba(0,0,0,.25);
+}
+
+.card-glow {
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    right: -100px;
+    top: -100px;
+
+    background:
+        rgba(255,130,180,.13);
+
+    filter: blur(10px);
+
+    transition: .6s;
+}
+
+.card:hover .card-glow {
+    transform:
+        scale(2.1);
+}
+
+.card-icon {
+    position: relative;
+
+    font-size: 43px;
+
+    margin-bottom: 20px;
+
+    transition:
+        transform .4s;
+}
+
+.card:hover .card-icon {
+    transform:
+        scale(1.15)
+        rotate(-5deg);
+}
+
+.card h3 {
+    position: relative;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 29px;
+
+    line-height: 1.1;
+
+    margin-bottom: 10px;
+}
+
+.card p {
+    position: relative;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.card.special {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,112,165,.13),
+            rgba(128,91,255,.13)
+        );
+
+    border-color:
+        rgba(255,170,205,.25);
+}
+
+/* =========================================================
+   COMPTEUR
+========================================================= */
+
+.counter-section {
+    margin-top: 110px;
+
+    padding: 50px 30px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 35px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    backdrop-filter:
+        blur(20px);
+}
+
+.counter-title {
+    color: var(--pink-light);
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+.counter-date {
+    color: var(--muted);
+
+    margin-top: 10px;
+
+    font-size: 13px;
+}
+
+.counter {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    max-width: 700px;
+
+    margin: 35px auto 0;
+}
+
+.counter-box {
+    padding: 22px 10px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.06);
+}
+
+.counter-number {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 42px;
+
+    color: #fff;
+}
+
+.counter-label {
+    color: #988693;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   PHOTOS
+========================================================= */
+
+.photos {
+    margin-top: 110px;
+}
+
+.photo-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.photo {
+    position: relative;
+
+    height: 260px;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,145,185,.13),
+            rgba(150,120,255,.13)
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: .4s;
+}
+
+.photo:hover {
+    transform: translateY(-7px);
+
+    border-color:
+        rgba(255,175,205,.35);
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: .5s;
+}
+
+.photo:hover img {
+    transform: scale(1.06);
+}
+
+.photo-placeholder {
+    text-align: center;
+
+    color: #aa97a7;
+
+    padding: 20px;
+}
+
+.photo-placeholder div {
+    font-size: 45px;
+
+    margin-bottom: 12px;
+}
+
+.photo-placeholder p {
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 500;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(6,3,10,.82);
+
+    backdrop-filter:
+        blur(15px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .4s,
+        visibility .4s;
+}
+
+.modal.active {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.modal-box {
+    position: relative;
+
+    width: min(800px, 100%);
+
+    max-height: 88vh;
+
+    overflow-y: auto;
+
+    padding:
+        50px 55px;
+
+    border-radius: 35px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(48,27,55,.98),
+            rgba(20,13,29,.98)
+        );
+
+    box-shadow:
+        0 40px 120px
+        rgba(0,0,0,.6);
+
+    transform:
+        translateY(40px)
+        scale(.94);
+
+    transition:
+        transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.modal.active .modal-box {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 18px;
+    right: 20px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.07);
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: .3s;
+}
+
+.modal-close:hover {
+    transform:
+        rotate(90deg);
+
+    background:
+        rgba(255,255,255,.15);
+}
+
+.modal-icon {
+    text-align: center;
+
+    font-size: 60px;
+
+    margin-bottom: 8px;
+
+    animation:
+        modalIcon .7s ease;
+}
+
+@keyframes modalIcon {
+
+    from {
+        transform:
+            scale(.5)
+            rotate(-15deg);
+
+        opacity: 0;
+    }
+
+    70% {
+        transform:
+            scale(1.15)
+            rotate(5deg);
+    }
+
+    to {
+        transform:
+            scale(1)
+            rotate(0);
+
+        opacity: 1;
+    }
+}
+
+.modal-title {
+    text-align: center;
+
+    font-family:
+        "Pacifico",
+        cursive;
+
+    font-size:
+        clamp(30px,5vw,45px);
+
+    font-weight: 400;
+
+    color:
+        var(--pink-light);
+
+    margin-bottom: 30px;
+}
+
+.progress {
+    width: 100%;
+    height: 3px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border-radius: 20px;
+
+    margin-bottom: 28px;
+}
+
+.progress-bar {
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    transition: width .2s;
+}
+
+.modal-text {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 22px;
+
+    line-height: 1.8;
+
+    color:
+        #eadfe8;
+
+    white-space: pre-line;
+
+    min-height: 200px;
+}
+
+.typing-cursor {
+    display: inline-block;
+
+    width: 2px;
+    height: 22px;
+
+    margin-left: 3px;
+
+    background:
+        var(--pink);
+
+    animation:
+        blink .8s infinite;
+}
+
+@keyframes blink {
+
+    0%,50% {
+        opacity: 1;
+    }
+
+    51%,100% {
+        opacity: 0;
+    }
+}
+
+.modal-bottom {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 35px;
+
+    gap: 15px;
+}
+
+.reading {
+    color: #887687;
+
+    font-size: 11px;
+}
+
+.close-button {
+    border: none;
+
+    padding:
+        13px 25px;
+
+    border-radius: 100px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.08);
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.close-button:hover {
+    background:
+        rgba(255,255,255,.15);
+
+    transform:
+        translateY(-2px);
+}
+
+/* =========================================================
+   SURPRISE
+========================================================= */
+
+.surprise-box {
+    text-align: center;
+}
+
+.surprise-heart {
+    font-size: 100px;
+
+    margin: 10px 0 25px;
+
+    animation:
+        heartbeat 1.3s infinite;
+}
+
+.surprise-box h2 {
+    font-family:
+        "Pacifico",
+        cursive;
+
+    font-weight: 400;
+
+    font-size: 42px;
+
+    color: var(--pink-light);
+}
+
+.surprise-box p {
+    margin-top: 20px;
+
+    color: var(--muted);
+
+    line-height: 1.9;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    margin-top: 100px;
+
+    padding-bottom: 30px;
+
+    color: #70606e;
+
+    font-size: 12px;
+}
+
+footer .heart {
+    color: var(--pink);
+
+    font-size: 18px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width: 900px) {
+
+    .cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .photo-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+
+    .navbar {
+        top: 10px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .page {
+        width: 90%;
+
+        padding-top: 100px;
+    }
+
+    .hero {
+        min-height: 80vh;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: 190px;
+    }
+
+    .counter {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-box {
+        padding:
+            45px 24px 30px;
+    }
+
+    .modal-text {
+        font-size: 20px;
+
+        line-height: 1.7;
+    }
+
+    .modal-bottom {
+        flex-direction: column;
+    }
+
+    .close-button {
+        width: 100%;
+    }
+
+    .cursor-glow {
+        display: none;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- =====================================================
+     LOADING
+===================================================== -->
+
+<div id="loadingScreen">
+
+    <div class="loading-heart">
+        💗
+    </div>
+
+    <div class="loading-text">
+        quelque chose arrive...
+    </div>
+
+    <div class="loading-dots">
+        • • •
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div class="background">
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div id="particles"></div>
+
+</div>
+
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Pour toi 💗
+    </div>
+
+    <div class="nav-actions">
+
+        <button
+            class="nav-btn"
+            onclick="scrollToLetters()"
+            title="Lettres">
+
+            💌
+
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="scrollToPhotos()"
+            title="Photos">
+
+            📸
+
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="showSurprise()"
+            title="Surprise">
+
+            🎁
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     PAGE
+===================================================== -->
+
+<main class="page">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-label">
+            un petit endroit rien que pour toi
+        </div>
+
+        <h1>
+            Pour toi
+            <span>💗</span>
+        </h1>
+
+        <p>
+            J'ai créé cet endroit pour toi.
+            Pour les jours où tu es triste, les moments où tu stresses,
+            quand tu t'ennuies, quand je te manque, quand tu as besoin
+            d'un câlin ou simplement quand tu veux lire quelque chose
+            qui vient de moi.
+        </p>
+
+        <div class="scroll-down">
+            ↓ découvre ton petit monde ↓
+        </div>
+
+    </section>
+
+
+    <!-- LETTRES -->
+
+    <section id="letters">
+
+        <div class="section-title">
+
+            <span>
+                ouvre celle dont tu as besoin
+            </span>
+
+            <h2>
+                Tes petites lettres 💌
+            </h2>
+
+        </div>
+
+
+        <div class="cards">
+
+
+            <!-- 1 -->
+
+            <div
+                class="card"
+                onclick="openLetter('sad')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    🥺
+                </div>
+
+                <h3>
+                    Quand tu es triste
+                </h3>
+
+                <p>
+                    Pour les jours où tu as besoin
+                    d'un peu de réconfort.
+                </p>
+
+            </div>
+
+
+            <!-- 2 -->
+
+            <div
+                class="card"
+                onclick="openLetter('angry')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    😡
+                </div>
+
+                <h3>
+                    Quand tu es en colère
+                </h3>
+
+                <p>
+                    Pour prendre une pause et
+                    laisser retomber la pression.
+                </p>
+
+            </div>
+
+
+            <!-- 3 -->
+
+            <div
+                class="card"
+                onclick="openLetter('love')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    💕
+                </div>
+
+                <h3>
+                    Quand tu manques d'amour
+                </h3>
+
+                <p>
+                    Un rappel de toute l'affection
+                    que tu mérites.
+                </p>
+
+            </div>
+
+
+            <!-- 4 -->
+
+            <div
+                class="card"
+                onclick="openLetter('bored')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    😴
+                </div>
+
+                <h3>
+                    Quand tu t'ennuies
+                </h3>
+
+                <p>
+                    Parce qu'il faut bien trouver
+                    quelque chose à faire. 😭
+                </p>
+
+            </div>
+
+
+            <!-- 5 -->
+
+            <div
+                class="card"
+                onclick="openLetter('hug')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    🫂
+                </div>
+
+                <h3>
+                    Quand tu as besoin d'un câlin
+                </h3>
+
+                <p>
+                    Un énorme câlin virtuel
+                    t'attend ici.
+                </p>
+
+            </div>
+
+
+            <!-- 6 -->
+
+            <div
+                class="card"
+                onclick="openLetter('sleep')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    🌙
+                </div>
+
+                <h3>
+                    Quand tu n'arrives pas à dormir
+                </h3>
+
+                <p>
+                    Une petite lettre calme
+                    pour terminer la journée.
+                </p>
+
+            </div>
+
+
+            <!-- 7 -->
+
+            <div
+                class="card"
+                onclick="openLetter('miss')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    💭
+                </div>
+
+                <h3>
+                    Quand je te manque
+                </h3>
+
+                <p>
+                    Pour les moments où tu aimerais
+                    que je sois à côté de toi.
+                </p>
+
+            </div>
+
+
+            <!-- 8 -->
+
+            <div
+                class="card"
+                onclick="openLetter('stress')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    🫨
+                </div>
+
+                <h3>
+                    Quand tu es stressée
+                </h3>
+
+                <p>
+                    Respire doucement.
+                    Une chose à la fois.
+                </p>
+
+            </div>
+
+
+            <!-- 9 -->
+
+            <div
+                class="card"
+                onclick="openLetter('loveMe')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    🥰
+                </div>
+
+                <h3>
+                    À quel point je t'aime
+                </h3>
+
+                <p>
+                    Une très longue réponse
+                    à une très grande question.
+                </p>
+
+            </div>
+
+
+            <!-- 10 -->
+
+            <div
+                class="card"
+                onclick="openLetter('memories')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    ✨
+                </div>
+
+                <h3>
+                    Nos souvenirs / nos moments
+                </h3>
+
+                <p>
+                    Les petits moments qui
+                    resteront avec nous.
+                </p>
+
+            </div>
+
+
+            <!-- 11 -->
+
+            <div
+                class="card special"
+                onclick="openLetter('personal')">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    💌
+                </div>
+
+                <h3>
+                    Ma touche personnelle
+                </h3>
+
+                <p>
+                    Une partie écrite entièrement
+                    par moi, pour toi.
+                </p>
+
+            </div>
+
+
+            <!-- 12 -->
+
+            <div
+                class="card special"
+                onclick="showSurprise()">
+
+                <div class="card-glow"></div>
+
+                <div class="card-icon">
+                    🎁
+                </div>
+
+                <h3>
+                    Une surprise
+                </h3>
+
+                <p>
+                    Tu es sûre de vouloir
+                    découvrir ce qu'il y a ici ? 👀
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         COMPTEUR
+    ================================================= -->
+
+    <section class="counter-section">
+
+        <div class="counter-title">
+            depuis un petit moment déjà...
+        </div>
+
+        <div class="counter-date">
+            Modifie la date dans le code 💗
+        </div>
+
+
+        <div class="counter">
+
+            <div class="counter-box">
+
+                <div
+                    class="counter-number"
+                    id="days">
+
+                    0
+
+                </div>
+
+                <div class="counter-label">
+                    jours
+                </div>
+
+            </div>
+
+
+            <div class="counter-box">
+
+                <div
+                    class="counter-number"
+                    id="hours">
+
+                    0
+
+                </div>
+
+                <div class="counter-label">
+                    heures
+                </div>
+
+            </div>
+
+
+            <div class="counter-box">
+
+                <div
+                    class="counter-number"
+                    id="minutes">
+
+                    0
+
+                </div>
+
+                <div class="counter-label">
+                    minutes
+                </div>
+
+            </div>
+
+
+            <div class="counter-box">
+
+                <div
+                    class="counter-number"
+                    id="seconds">
+
+                    0
+
+                </div>
+
+                <div class="counter-label">
+                    secondes
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PHOTOS
+    ================================================= -->
+
+    <section
+        class="photos"
+        id="photos">
+
+        <div class="section-title">
+
+            <span>
+                à personnaliser
+            </span>
+
+            <h2>
+                Quelques petits souvenirs 📸
+            </h2>
+
+        </div>
+
+
+        <div class="photo-grid">
+
+
+            <div class="photo">
+
+                <div class="photo-placeholder">
+
+                    <div>
+                        📸
+                    </div>
+
+                    <p>
+                        Mets ici une photo de vous.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="photo">
+
+                <div class="photo-placeholder">
+
+                    <div>
+                        💗
+                    </div>
+
+                    <p>
+                        Une deuxième photo
+                        que tu aimes particulièrement.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="photo">
+
+                <div class="photo-placeholder">
+
+                    <div>
+                        ✨
+                    </div>
+
+                    <p>
+                        Et pourquoi pas une photo
+                        complètement random. 😭
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        Fait avec
+
+        <span class="heart">
+            ♥
+        </span>
+
+        juste pour toi.
+
+    </footer>
+
+</main>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="modal">
+
+    <div
+        class="modal-box"
+        id="modalBox">
+
+
+        <button
+            class="modal-close"
+            onclick="closeLetter()">
+
+            ×
+
+        </button>
+
+
+        <div
+            class="modal-icon"
+            id="modalIcon">
+
+            💗
+
+        </div>
+
+
+        <h2
+            class="modal-title"
+            id="modalTitle">
+
+            Pour toi
+
+        </h2>
+
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar">
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="modal-text"
+            id="modalText">
+
+        </div>
+
+
+        <div class="modal-bottom">
+
+            <div
+                class="reading"
+                id="reading">
+
+                lecture...
+
+            </div>
+
+
+            <button
+                class="close-button"
+                onclick="closeLetter()">
+
+                Fermer la lettre 💗
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+
+/*
+    💗 MODIFIE CETTE DATE
+
+    Exemple :
+
+    "2026-02-14T18:30:00"
+
+*/
+
+const startDate =
+    new Date("2025-12-29T21:00:00");
+
+
+/*
+    💌 TES LETTRES
+
+    Tu peux modifier tous les textes ici.
+*/
+
+const letters = {
+
+    sad: {
+
+        icon: "🥺",
+
+        title: "Quand tu es triste",
+
+        text: `Mon cœur,
+
+Si tu es arrivée jusqu'ici, c'est sûrement que tu traverses un moment où ça ne va pas très bien.
+
+Alors avant même de continuer à lire, j'aimerais que tu prennes quelques secondes pour respirer et te poser.
+
+Tu sais, tu n'as pas besoin d'être heureuse tout le temps.
+
+Tu as le droit d'avoir des journées compliquées.
+
+Tu as le droit d'être fatiguée.
+
+Tu as le droit de ne pas avoir envie de parler.
+
+Tu as même le droit de ne pas savoir exactement pourquoi tu te sens mal.
+
+Et surtout, ne pense jamais que tu es un poids pour moi simplement parce que tu vas mal.
+
+Si tu as besoin de parler, je t'écouterai.
+
+Si tu n'as pas envie de parler, je peux simplement rester là avec toi.
+
+J'aimerais tellement pouvoir être à côté de toi dans ces moments-là.
+
+Pouvoir te faire un câlin.
+
+Pouvoir te faire sourire.
+
+Ou simplement rester avec toi sans avoir besoin de parler.
+
+Une mauvaise journée ne définit pas tout ce que tu es.
+
+Alors prends ton temps.
+
+Respire doucement.
+
+Fais quelque chose qui te fait du bien.
+
+Et surtout, sois gentille avec toi-même.
+
+Tu es énormément importante pour moi.
+
+Même quand tu n'es pas de bonne humeur.
+
+Même quand tu doutes.
+
+Même quand tu n'as pas envie de sourire.
+
+Pour moi, tu restes toi.
+
+Et je tiens énormément à toi.
+
+Je t'aime. ❤️`
+
+    },
+
+
+    angry: {
+
+        icon: "😡",
+
+        title: "Quand tu es en colère",
+
+        text: `Coucou toi.
+
+Si tu as ouvert cette lettre, je vais partir du principe que quelque chose t'a vraiment énervée. 😭
+
+Alors première chose :
+
+Respire.
+
+Tu n'as pas besoin de régler tout immédiatement.
+
+Si quelque chose t'énerve énormément, prends quelques minutes pour toi avant de répondre ou de prendre une décision.
+
+Tu as le droit d'être en colère.
+
+Tu as le droit de trouver quelque chose injuste.
+
+Tu as le droit de ne pas être d'accord.
+
+Mais prends quand même le temps de laisser retomber un peu toute cette pression.
+
+Éloigne-toi quelques minutes si tu peux.
+
+Mets une musique.
+
+Respire.
+
+Et laisse-toi le temps de redescendre.
+
+Et si après ça tu as toujours envie de m'en parler...
+
+Alors viens.
+
+Raconte-moi tout.
+
+Même si tu penses que c'est ridicule.
+
+Même si tu dois m'envoyer un énorme pavé.
+
+Même si tu répètes dix fois la même chose.
+
+Je t'écouterai.
+
+Et si tu veux simplement te plaindre pendant vingt minutes sans chercher de solution...
+
+Bon.
+
+Je t'écoute. 😭
+
+Maintenant respire un bon coup.
+
+Ça va aller.
+
+Et n'oublie pas que je suis là. ❤️`
+
+    },
+
+
+    love: {
+
+        icon: "💕",
+
+        title: "Quand tu manques d'amour",
+
+        text: `Alors viens ici.
+
+Si tu as ouvert cette lettre parce que tu as besoin d'un peu d'amour, j'espère que ces quelques lignes pourront au moins te faire sourire.
+
+Tu es aimée.
+
+Vraiment.
+
+Tu n'as pas besoin de faire quelque chose de spécial pour mériter de l'affection.
+
+Tu n'as pas besoin d'être parfaite.
+
+Tu n'as pas besoin d'être toujours heureuse.
+
+Tu n'as pas besoin d'être toujours drôle.
+
+Tu peux simplement être toi.
+
+Et c'est largement suffisant.
+
+J'aime énormément les petites choses chez toi.
+
+Ta façon d'être.
+
+Ta façon de parler.
+
+Tes réactions.
+
+Tes petites habitudes.
+
+Les moments où tu me fais rire sans même essayer.
+
+Les discussions complètement normales qui deviennent finalement des moments importants.
+
+Tout ça compte énormément pour moi.
+
+J'aimerais pouvoir être à côté de toi maintenant.
+
+Te prendre dans mes bras.
+
+Te rassurer.
+
+Et te dire que tu es importante.
+
+Alors imagine que ce message est un énorme câlin virtuel.
+
+🫂
+
+Et si tu as encore besoin d'amour après avoir lu ça...
+
+Relis-le.
+
+Autant de fois que tu veux.
+
+Je ne me lasserai jamais de te rappeler que tu comptes pour moi.
+
+Je t'aime énormément. ❤️`
+
+    },
+
+
+    bored: {
+
+        icon: "😴",
+
+        title: "Quand tu t'ennuies",
+
+        text: `Alors comme ça...
+
+Tu t'ennuies ? 👀
+
+Et tu as décidé de venir ici.
+
+Très bon choix.
+
+Mais maintenant il faut trouver quelque chose à faire.
+
+Tu peux m'envoyer un message complètement inutile.
+
+Tu peux me raconter la première chose qui te passe par la tête.
+
+Tu peux me poser une question complètement bizarre.
+
+Tu peux écouter une musique que tu aimes.
+
+Tu peux regarder quelque chose qui te fait rire.
+
+Tu peux faire quelque chose que tu repousses depuis longtemps.
+
+Ou alors...
+
+Tu peux simplement rester ici et relire tout le site parce que tu n'as vraiment rien d'autre à faire. 😭
+
+Mais attention.
+
+Si tu lis ce message jusqu'au bout...
+
+Tu as officiellement l'obligation morale de venir me parler après.
+
+Voilà.
+
+C'est la règle.
+
+Je n'ai pas inventé les règles.
+
+Elles étaient déjà là.
+
+Quelque part.
+
+Promis. 😌`
+
+    },
+
+
+    hug: {
+
+        icon: "🫂",
+
+        title: "Quand tu as besoin d'un câlin",
+
+        text: `Approche.
+
+Oui toi.
+
+Pas besoin de parler.
+
+Pas besoin d'expliquer pourquoi.
+
+Pas besoin de me raconter ce qui s'est passé.
+
+Imagine simplement que je suis là.
+
+Et que je te fais un énorme câlin.
+
+Un vrai câlin qui dure longtemps.
+
+Celui où tu peux juste rester tranquille.
+
+Celui où tu n'as pas besoin de penser à quoi que ce soit pendant quelques instants.
+
+🫂
+
+Voilà.
+
+Reste encore un peu.
+
+...
+
+Encore un peu.
+
+...
+
+Tu vois ?
+
+Même si ce n'est qu'un petit message sur un écran, j'espère qu'il peut te rappeler que tu n'es pas toute seule.
+
+Et surtout que tu peux toujours venir me parler.
+
+Alors garde ce petit câlin avec toi.
+
+Et si tu en as besoin demain...
+
+Reviens.
+
+Il sera encore là.
+
+🫂❤️`
+
+    },
+
+
+    sleep: {
+
+        icon: "🌙",
+
+        title: "Quand tu n'arrives pas à dormir",
+
+        text: `Il est tard.
+
+Tu es probablement dans ton lit.
+
+Et au lieu de dormir...
+
+Tu es ici. 😭
+
+Alors je vais te demander une petite chose.
+
+Prends quelques secondes pour poser tout ce qui te passe par la tête.
+
+Tu n'as pas besoin de résoudre les problèmes de demain maintenant.
+
+Demain pourra attendre.
+
+Pour l'instant, tu peux simplement te reposer.
+
+Respire doucement.
+
+Ferme les yeux quelques instants.
+
+Essaie de penser à quelque chose de calme.
+
+Et si ta journée n'était pas parfaite...
+
+Ce n'est pas grave.
+
+Elle est terminée.
+
+Tu as fait ce que tu pouvais aujourd'hui.
+
+Tu pourras recommencer demain.
+
+Alors laisse cette journée derrière toi.
+
+J'espère que tu vas réussir à t'endormir tranquillement.
+
+Et si tu lis ça juste avant de poser ton téléphone...
+
+Bonne nuit, toi. 🌙
+
+Fais de beaux rêves.
+
+Et n'oublie pas que quelqu'un pense à toi avant de dormir. ❤️`
+
+    },
+
+
+    miss: {
+
+        icon: "💭",
+
+        title: "Quand je te manque",
+
+        text: `Alors...
+
+Je te manque ?
+
+Sache déjà que si tu ressens ce manque, ça veut simplement dire que tu tiens énormément à moi.
+
+Et tu sais quoi ?
+
+Tu me manques aussi.
+
+Il y a parfois des moments où j'aimerais simplement pouvoir être avec toi.
+
+Pas forcément pour faire quelque chose d'incroyable.
+
+Juste être là.
+
+Te parler.
+
+Rigoler.
+
+Faire n'importe quoi.
+
+Passer du temps ensemble.
+
+Parce que finalement, ce sont souvent les moments les plus simples qui deviennent les meilleurs souvenirs.
+
+Alors quand je te manque, ne pense pas seulement au fait que je ne suis pas là.
+
+Pense aussi à tout ce qu'on a déjà partagé.
+
+Toutes les conversations.
+
+Tous les fous rires.
+
+Tous les petits moments.
+
+Toutes les fois où on a parlé pendant beaucoup trop longtemps.
+
+Et pense surtout à tous les moments qu'on n'a pas encore vécus.
+
+Je pense à toi.
+
+Et même si je ne peux pas être là physiquement à cet instant...
+
+J'espère que cette petite lettre peut te donner l'impression que je suis un tout petit peu plus proche.
+
+Tu me manques aussi. ❤️`
+
+    },
+
+
+    stress: {
+
+        icon: "🫨",
+
+        title: "Quand tu es stressée",
+
+        text: `Stop deux secondes.
+
+Pose tout.
+
+Respire.
+
+Oui, maintenant. 😭
+
+Inspire doucement.
+
+Expire.
+
+Encore une fois.
+
+Tu n'as pas besoin de penser à tout en même temps.
+
+Si tu as beaucoup de choses à faire, prends simplement la première.
+
+Une seule.
+
+Puis la suivante.
+
+Tu n'as pas besoin de tout réussir parfaitement.
+
+Tu n'as pas besoin d'avoir toutes les réponses immédiatement.
+
+Et surtout, ne te mets pas une pression énorme pour être parfaite.
+
+Tu fais ce que tu peux.
+
+Et parfois, faire de son mieux, c'est déjà énormément.
+
+Si quelque chose te paraît énorme maintenant, essaie de le découper en petites étapes.
+
+Une chose.
+
+Puis une autre.
+
+Puis encore une autre.
+
+Et si tu as simplement besoin de souffler et de penser à autre chose...
+
+Viens me parler.
+
+Tu peux me raconter ce qui te stresse.
+
+Tu peux m'envoyer un pavé.
+
+Tu peux même juste m'envoyer "je suis stressée" et je comprendrai que tu as besoin de quelqu'un.
+
+Alors maintenant...
+
+Une dernière grande respiration.
+
+Tu n'as pas besoin de tout gérer parfaitement.
+
+Prends ton temps.
+
+Tu peux y arriver. ❤️`
+
+    },
+
+
+    loveMe: {
+
+        icon: "🥰",
+
+        title: "À quel point je t'aime",
+
+        text: `Tu veux vraiment savoir ?
+
+Alors prépare-toi parce que je pourrais probablement écrire pendant des heures.
+
+Je pourrais commencer par toutes les petites choses que j'aime chez toi.
+
+Ta façon de parler.
+
+Ta façon de réagir.
+
+Les moments où tu me fais rire sans même essayer.
+
+Les discussions complètement normales qui deviennent finalement mes moments préférés.
+
+Les petites attentions.
+
+Les messages.
+
+Les blagues.
+
+Les moments où on raconte n'importe quoi.
+
+Et surtout...
+
+Le simple fait que tu sois toi.
+
+Je ne veux pas seulement être là quand tout va bien.
+
+Je veux aussi pouvoir être là quand tu es triste.
+
+Quand tu es énervée.
+
+Quand tu doutes.
+
+Quand tu es stressée.
+
+Quand tu t'ennuies.
+
+Quand tu as simplement besoin de quelqu'un.
+
+Je veux pouvoir te rappeler que tu comptes.
+
+Parce que tu comptes énormément pour moi.
+
+Et même si je pouvais écrire mille pages ici...
+
+Je pense que je trouverais encore de nouvelles choses à dire.
+
+Alors je vais simplement te donner la phrase la plus simple :
+
+Je t'aime.
+
+Énormément.
+
+Plus que ce petit écran ne pourra jamais réussir à te le montrer.
+
+❤️`
+
+    },
+
+
+    memories: {
+
+        icon: "✨",
+
+        title: "Nos souvenirs / nos moments",
+
+        text: `Cette partie est pour tous les petits moments qui comptent.
+
+Pas forcément les événements les plus incroyables.
+
+Même les choses les plus simples peuvent devenir importantes.
+
+Une conversation qui devait durer cinq minutes et qui a finalement duré beaucoup plus longtemps.
+
+Un fou rire complètement idiot.
+
+Une phrase que l'un de nous a dite et que l'autre n'a jamais oubliée.
+
+Un moment où on était simplement heureux d'être ensemble.
+
+Une petite attention.
+
+Un message envoyé au mauvais moment mais qui nous a fait rire.
+
+Toutes ces choses peuvent sembler minuscules.
+
+Mais avec le temps, ce sont justement elles qu'on finit par garder.
+
+Alors cette page n'est pas vraiment terminée.
+
+Parce qu'il y aura encore plein de choses à ajouter.
+
+Encore plein de conversations.
+
+Encore plein de fous rires.
+
+Encore plein de journées.
+
+Encore plein de moments qu'on ne connaît même pas encore.
+
+Et j'espère qu'un jour, quand on regardera tout ça...
+
+On pourra se dire :
+
+"On en a vécu des choses."
+
+✨❤️`
+
+    },
+
+
+    personal: {
+
+        icon: "💌",
+
+        title: "Ma touche personnelle",
+
+        text: `Bon.
+
+Cette page-là est différente.
+
+Parce que toutes les autres parlent de ce que tu peux ressentir.
+
+Mais celle-ci...
+
+C'est simplement quelque chose que je voulais te laisser.
+
+━━━━━━━━━━━━━━━━━━━━
+
+[ ÉCRIS TON MESSAGE PERSONNEL ICI ]
+
+━━━━━━━━━━━━━━━━━━━━
+
+Tu peux mettre absolument ce que tu veux ici.
+
+Une déclaration.
+
+Une blague que vous seuls comprenez.
+
+Un souvenir précis.
+
+Une phrase que tu veux qu'elle puisse relire.
+
+Quelque chose que tu n'arrives pas toujours à lui dire directement.
+
+Ou même quelque chose de complètement débile qui la fera rire.
+
+C'est justement ça qui rendra cette page différente.
+
+Parce que ce sera vraiment ta partie à toi.
+
+Et contrairement aux autres textes du site...
+
+Celui-là viendra entièrement de toi.
+
+Alors prends ton temps.
+
+Écris avec tes mots.
+
+Même si ce n'est pas parfait.
+
+Parce que c'est justement ce qui le rendra spécial. 💌`
+
+    }
+
+};
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        document
+            .getElementById("loadingScreen")
+            .classList.add("hidden");
+
+    }, 1300);
+
+});
+
+
+/* =========================================================
+   PARTICULES
+========================================================= */
+
+const particles =
+    document.getElementById("particles");
+
+const particleSymbols = [
+    "♥",
+    "♡",
+    "💗",
+    "💖",
+    "✨",
+    "·"
+];
+
+
+function createParticle() {
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "particle";
+
+    particle.textContent =
+        particleSymbols[
+            Math.floor(
+                Math.random() *
+                particleSymbols.length
+            )
+        ];
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.fontSize =
+        (10 + Math.random() * 25) + "px";
+
+    const duration =
+        7 + Math.random() * 9;
+
+    particle.style.animationDuration =
+        duration + "s";
+
+    particles.appendChild(particle);
+
+    setTimeout(() => {
+
+        particle.remove();
+
+    }, duration * 1000);
+
+}
+
+
+setInterval(
+    createParticle,
+    550
+);
+
+
+/* =========================================================
+   CURSEUR
+========================================================= */
+
+const cursor =
+    document.getElementById("cursorGlow");
+
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        cursor.animate(
+            {
+                left:
+                    event.clientX + "px",
+
+                top:
+                    event.clientY + "px"
+            },
+            {
+                duration: 500,
+                fill: "forwards"
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+const modal =
+    document.getElementById("modal");
+
+const modalIcon =
+    document.getElementById("modalIcon");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalText =
+    document.getElementById("modalText");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const reading =
+    document.getElementById("reading");
+
+
+let typingInterval;
+
+
+/* =========================================================
+   OUVRIR LETTRE
+========================================================= */
+
+function openLetter(type) {
+
+    const letter =
+        letters[type];
+
+    if (!letter) return;
+
+
+    clearInterval(
+        typingInterval
+    );
+
+
+    modalIcon.textContent =
+        letter.icon;
+
+    modalTitle.textContent =
+        letter.title;
+
+    modalText.innerHTML = "";
+
+    progressBar.style.width =
+        "0%";
+
+
+    modal.classList.add(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    createHeartBurst();
+
+
+    typeText(
+        letter.text
+    );
+
+}
+
+
+/* =========================================================
+   TEXTE QUI S'ÉCRIT
+========================================================= */
+
+function typeText(text) {
+
+    let index = 0;
+
+    const total =
+        text.length;
+
+
+    const cursor =
+        document.createElement("span");
+
+    cursor.className =
+        "typing-cursor";
+
+
+    typingInterval =
+        setInterval(() => {
+
+            if (index >= total) {
+
+                clearInterval(
+                    typingInterval
+                );
+
+                cursor.remove();
+
+                reading.textContent =
+                    "lecture terminée 💗";
+
+                return;
+            }
+
+
+            modalText.textContent +=
+                text[index];
+
+            index++;
+
+
+            modalText.appendChild(
+                cursor
+            );
+
+
+            const percent =
+                (index / total) * 100;
+
+
+            progressBar.style.width =
+                percent + "%";
+
+
+            const scrollHeight =
+                modalText.parentElement
+                    .scrollHeight;
+
+            modalText.parentElement.scrollTop =
+                scrollHeight;
+
+
+        }, 10);
+
+}
+
+
+/* =========================================================
+   FERMER
+========================================================= */
+
+function closeLetter() {
+
+    clearInterval(
+        typingInterval
+    );
+
+    modal.classList.remove(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   CLIC À L'EXTÉRIEUR
+========================================================= */
+
+modal.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target === modal
+        ) {
+
+            closeLetter();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeLetter();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   EXPLOSION DE COEURS
+========================================================= */
+
+function createHeartBurst() {
+
+    const symbols = [
+        "💗",
+        "💖",
+        "💕",
+        "♥",
+        "✨"
+    ];
+
+
+    for (
+        let i = 0;
+        i < 22;
+        i++
+    ) {
+
+        const heart =
+            document.createElement("div");
+
+
+        heart.style.position =
+            "fixed";
+
+        heart.style.zIndex =
+            "1000";
+
+        heart.style.left =
+            "50%";
+
+        heart.style.top =
+            "50%";
+
+        heart.style.pointerEvents =
+            "none";
+
+        heart.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
+
+
+        const angle =
+            Math.random() *
+            Math.PI * 2;
+
+        const distance =
+            100 +
+            Math.random() * 300;
+
+        const x =
+            Math.cos(angle) *
+            distance;
+
+        const y =
+            Math.sin(angle) *
+            distance;
+
+
+        heart.animate(
+            [
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(0)",
+                    opacity: 0
+                },
+
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(1.2)",
+                    opacity: 1,
+                    offset: .2
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${x}px),
+                            calc(-50% + ${y}px)
+                        )
+                        scale(.7)
+                        rotate(360deg)`,
+
+                    opacity: 0
+                }
+            ],
+            {
+                duration:
+                    900 +
+                    Math.random() * 700,
+
+                easing:
+                    "cubic-bezier(.2,.8,.3,1)"
+            }
+        );
+
+
+        document.body.appendChild(
+            heart
+        );
+
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 1800);
+
+    }
+
+}
+
+
+/* =========================================================
+   SURPRISE
+========================================================= */
+
+function showSurprise() {
+
+    modalIcon.textContent =
+        "🎁";
+
+    modalTitle.textContent =
+        "Tu as trouvé la surprise";
+
+
+    modalText.innerHTML = `
+
+<div class="surprise-box">
+
+    <div class="surprise-heart">
+        💗
+    </div>
+
+    <h2>
+        Pour toi.
+    </h2>
+
+    <p>
+        Si tu es arrivée jusqu'ici,
+        c'est que tu as vraiment tout exploré. 👀
+        <br><br>
+
+        Alors voilà la seule surprise
+        que je peux te donner depuis cet écran :
+        <br><br>
+
+        un énorme rappel que tu comptes
+        énormément pour moi.
+        <br><br>
+
+        Et ce site n'est pas vraiment terminé...
+        <br><br>
+
+        Parce qu'il y aura toujours de nouvelles
+        choses à ajouter, de nouveaux souvenirs,
+        de nouveaux messages et de nouveaux moments.
+        <br><br>
+
+        ❤️
+        <br><br>
+
+        Je t'aime.
+    </p>
+
+</div>
+
+    `;
+
+
+    progressBar.style.width =
+        "100%";
+
+    reading.textContent =
+        "surprise débloquée 🎁";
+
+
+    modal.classList.add(
+        "active"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    createHeartBurst();
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function scrollToLetters() {
+
+    document
+        .getElementById("letters")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+function scrollToPhotos() {
+
+    document
+        .getElementById("photos")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =========================================================
+   COMPTEUR
+========================================================= */
+
+function updateCounter() {
+
+    const now =
+        new Date();
+
+    let difference =
+        now - startDate;
+
+
+    if (difference < 0) {
+
+        difference = 0;
+
+    }
+
+
+    const seconds =
+        Math.floor(
+            difference / 1000
+        );
+
+
+    const days =
+        Math.floor(
+            seconds / 86400
+        );
+
+
+    const hours =
+        Math.floor(
+            (seconds % 86400) /
+            3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (seconds % 3600) /
+            60
+        );
+
+
+    const secs =
+        seconds % 60;
+
+
+    document.getElementById("days")
+        .textContent =
+        days;
+
+
+    document.getElementById("hours")
+        .textContent =
+        String(hours)
+            .padStart(2,"0");
+
+
+    document.getElementById("minutes")
+        .textContent =
+        String(minutes)
+            .padStart(2,"0");
+
+
+    document.getElementById("seconds")
+        .textContent =
+        String(secs)
+            .padStart(2,"0");
+
+}
+
+
+updateCounter();
+
+setInterval(
+    updateCounter,
+    1000
+);
+
+
+/* =========================================================
+   EFFET TILT SUR LES CARTES
+========================================================= */
+
+document
+    .querySelectorAll(".card")
+    .forEach(card => {
+
+        card.addEventListener(
+            "mousemove",
+            (event) => {
+
+                if (
+                    window.innerWidth < 700
+                ) return;
+
+
+                const rect =
+                    card.getBoundingClientRect();
+
+
+                const x =
+                    event.clientX -
+                    rect.left;
+
+
+                const y =
+                    event.clientY -
+                    rect.top;
+
+
+                const centerX =
+                    rect.width / 2;
+
+
+                const centerY =
+                    rect.height / 2;
+
+
+                const rotateX =
+                    ((y - centerY) /
+                    centerY) *
+                    -3;
+
+
+                const rotateY =
+                    ((x - centerX) /
+                    centerX) *
+                    3;
+
+
+                card.style.transform =
+                    `translateY(-10px)
+                     perspective(700px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                card.style.transform =
+                    "";
+
+            }
+        );
+
+    });
+
+
+</script>
+
+</body>
+</html>
