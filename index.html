@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pour toi 💗</title>
+<title>Pour toi, mon cœur 💗</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,22 +13,31 @@
 
 <style>
 
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 :root {
-    --pink: #ff91b9;
-    --pink-light: #ffc6da;
-    --purple: #ad91ff;
-
-    --background: #0c0812;
-    --background-2: #171021;
-
-    --white: #fff;
-    --text: #f8edf4;
-    --muted: #bbaab8;
-
-    --glass: rgba(255,255,255,.065);
-    --glass-hover: rgba(255,255,255,.105);
+    --bg: #09070d;
+    --bg2: #15101b;
+    --card: rgba(255,255,255,.055);
+    --card-hover: rgba(255,255,255,.09);
     --border: rgba(255,255,255,.12);
+
+    --pink: #ff83b1;
+    --pink2: #ffb6d1;
+    --purple: #a995ff;
+
+    --text: #fff7fb;
+    --muted: #b8aab6;
+    --dim: #776b77;
+
+    --shadow: 0 30px 90px rgba(0,0,0,.35);
 }
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -42,138 +51,266 @@ html {
 
 body {
     min-height: 100vh;
+
     font-family: "DM Sans", sans-serif;
+
     color: var(--text);
 
     background:
-        radial-gradient(circle at 10% 10%, rgba(255,105,160,.16), transparent 30%),
-        radial-gradient(circle at 90% 80%, rgba(123,91,255,.15), transparent 30%),
-        linear-gradient(135deg, var(--background), var(--background-2), var(--background));
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(255,92,153,.15),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 100% 70%,
+            rgba(119,91,255,.15),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bg),
+            var(--bg2),
+            var(--bg)
+        );
 
     overflow-x: hidden;
 }
 
-/* =========================
-   LOADING
-========================= */
+/* =========================================================
+   NOISE
+========================================================= */
 
-#loadingScreen {
+body::before {
+    content: "";
+
     position: fixed;
+
     inset: 0;
-    z-index: 9999;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    pointer-events: none;
 
-    background: radial-gradient(circle, #261529, #0b0710);
+    z-index: 10000;
 
-    transition: opacity .8s ease, visibility .8s ease;
+    opacity: .025;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
 }
 
-#loadingScreen.hidden {
+/* =========================================================
+   LOADING
+========================================================= */
+
+#loader {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle,
+            #241324,
+            #09060c 70%
+        );
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#loader.hide {
     opacity: 0;
     visibility: hidden;
 }
 
-.loading-heart {
-    font-size: 70px;
-    animation: heartbeat 1.2s infinite;
+.loader-heart {
+    font-size: 75px;
+
+    animation:
+        heartbeat 1.1s infinite,
+        loaderFloat 2s ease-in-out infinite;
 }
 
-.loading-text {
+.loader-title {
     margin-top: 25px;
-    color: var(--muted);
-    font-size: 13px;
+
+    font-family: "Pacifico", cursive;
+
+    font-size: 26px;
+
+    color: var(--pink2);
+}
+
+.loader-small {
+    margin-top: 12px;
+
+    color: var(--dim);
+
+    font-size: 11px;
+
     letter-spacing: 3px;
+
     text-transform: uppercase;
 }
 
-.loading-dots {
-    margin-top: 12px;
-    color: var(--pink);
-    letter-spacing: 5px;
-}
-
 @keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    20% { transform: scale(1.15); }
-    40% { transform: scale(1); }
-    60% { transform: scale(1.1); }
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.16);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(1.09);
+    }
+
 }
 
-/* =========================
-   BACKGROUND
-========================= */
+@keyframes loaderFloat {
 
-.background {
+    0%,100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -8px;
+    }
+
+}
+
+/* =========================================================
+   BACKGROUND ORBS
+========================================================= */
+
+.bg {
     position: fixed;
+
     inset: 0;
-    overflow: hidden;
-    pointer-events: none;
+
     z-index: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
 }
 
 .orb {
     position: absolute;
+
     border-radius: 50%;
-    filter: blur(90px);
-    opacity: .2;
-    animation: orbMove 18s ease-in-out infinite alternate;
+
+    filter: blur(100px);
+
+    opacity: .18;
+
+    animation:
+        orbMove 20s ease-in-out infinite alternate;
 }
 
-.orb-1 {
-    width: 350px;
-    height: 350px;
-    background: #ff4f95;
-    left: -120px;
-    top: -100px;
-}
-
-.orb-2 {
+.orb.one {
     width: 400px;
     height: 400px;
-    background: #714fff;
-    right: -160px;
-    bottom: -150px;
+
+    background: #ff5798;
+
+    left: -180px;
+    top: -130px;
+}
+
+.orb.two {
+    width: 430px;
+    height: 430px;
+
+    background: #7255ff;
+
+    right: -190px;
+    bottom: -160px;
+
     animation-delay: -7s;
 }
 
-.orb-3 {
-    width: 250px;
-    height: 250px;
-    background: #ff9fc4;
+.orb.three {
+    width: 280px;
+    height: 280px;
+
+    background: #ff9dc2;
+
     left: 45%;
-    top: 40%;
-    opacity: .07;
-    animation-delay: -11s;
+    top: 45%;
+
+    opacity: .05;
+
+    animation-delay: -13s;
 }
 
 @keyframes orbMove {
+
     from {
-        transform: translate(0,0) scale(1);
+        transform:
+            translate(0,0)
+            scale(1);
     }
 
     to {
-        transform: translate(100px,70px) scale(1.25);
+        transform:
+            translate(120px,80px)
+            scale(1.25);
     }
+
 }
 
-/* =========================
-   PARTICULES
-========================= */
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
 
-.particle {
+#hearts {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    overflow: hidden;
+}
+
+.floating-heart {
     position: absolute;
-    bottom: -40px;
+
+    bottom: -50px;
+
     opacity: 0;
-    animation: particleFloat linear forwards;
+
+    animation:
+        floatHeart linear forwards;
 }
 
-@keyframes particleFloat {
+@keyframes floatHeart {
+
     0% {
-        transform: translateY(0) rotate(0deg);
+        transform:
+            translateY(0)
+            rotate(0deg);
+
         opacity: 0;
     }
 
@@ -181,164 +318,258 @@ body {
         opacity: .6;
     }
 
-    85% {
-        opacity: .35;
+    80% {
+        opacity: .3;
     }
 
     100% {
-        transform: translateY(-115vh) rotate(360deg);
+        transform:
+            translateY(-115vh)
+            rotate(360deg);
+
         opacity: 0;
     }
+
 }
 
-/* =========================
-   CURSEUR
-========================= */
-
-.cursor-glow {
-    position: fixed;
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 2;
-
-    background:
-        radial-gradient(circle, rgba(255,150,190,.09), transparent 65%);
-
-    transform: translate(-50%, -50%);
-}
-
-/* =========================
+/* =========================================================
    NAVBAR
-========================= */
+========================================================= */
 
 .navbar {
     position: fixed;
+
     top: 18px;
     left: 50%;
+
     transform: translateX(-50%);
 
-    width: min(900px, 90%);
-    z-index: 100;
+    width: min(1050px, 92%);
 
-    padding: 10px 14px;
+    z-index: 900;
+
+    padding: 10px 12px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    border: 1px solid rgba(255,255,255,.09);
+    border:
+        1px solid rgba(255,255,255,.1);
+
     border-radius: 100px;
 
-    background: rgba(15,10,22,.65);
-    backdrop-filter: blur(20px);
+    background:
+        rgba(10,7,15,.65);
 
-    box-shadow: 0 10px 40px rgba(0,0,0,.2);
+    backdrop-filter:
+        blur(22px);
+
+    box-shadow:
+        0 15px 60px rgba(0,0,0,.25);
 }
 
 .logo {
+    padding-left: 14px;
+
     font-family: "Pacifico", cursive;
+
     font-size: 19px;
-    color: var(--pink-light);
-    padding-left: 10px;
+
+    color: var(--pink2);
 }
 
-.nav-actions {
+.nav-links {
     display: flex;
-    gap: 8px;
+
+    gap: 5px;
 }
 
-.nav-btn {
+.nav-link {
     border: none;
-    width: 40px;
-    height: 40px;
 
-    border-radius: 50%;
+    color: #c7b8c4;
 
-    color: white;
-    background: rgba(255,255,255,.07);
+    background: transparent;
+
+    padding: 10px 13px;
+
+    border-radius: 100px;
 
     cursor: pointer;
+
+    font-size: 11px;
+
     transition: .3s;
 }
 
-.nav-btn:hover {
-    background: rgba(255,255,255,.15);
-    transform: translateY(-2px);
+.nav-link:hover {
+    color: white;
+
+    background:
+        rgba(255,255,255,.08);
 }
 
-/* =========================
-   PAGE
-========================= */
+.nav-heart {
+    width: 40px;
+    height: 40px;
 
-.page {
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.nav-heart:hover {
+    transform: scale(1.08);
+
+    background:
+        rgba(255,120,170,.18);
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
     position: relative;
-    z-index: 3;
+
+    z-index: 5;
 
     width: min(1120px, 92%);
+
     margin: auto;
 
-    padding: 140px 0 60px;
+    padding:
+        130px
+        0
+        80px;
 }
 
-/* =========================
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero {
-    text-align: center;
-    min-height: 75vh;
+    min-height: 78vh;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
 
-    animation: heroAppear 1.2s ease;
+    text-align: center;
+
+    position: relative;
 }
 
-@keyframes heroAppear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
+.hero-badge {
+    padding: 8px 15px;
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+    border:
+        1px solid rgba(255,255,255,.12);
 
-.hero-label {
-    color: var(--pink-light);
-    font-size: 11px;
-    letter-spacing: 5px;
+    border-radius: 100px;
+
+    color: var(--pink2);
+
+    background:
+        rgba(255,255,255,.045);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
     text-transform: uppercase;
-    margin-bottom: 25px;
+
+    animation:
+        fadeUp .9s ease both;
 }
 
 .hero h1 {
+    margin-top: 25px;
+
     font-family: "Pacifico", cursive;
 
-    font-size: clamp(55px, 10vw, 110px);
+    font-size:
+        clamp(60px, 11vw, 125px);
+
+    line-height: 1.05;
+
     font-weight: 400;
-    line-height: 1.1;
 
     background:
-        linear-gradient(90deg, #fff, #ffadc9, #c4b0ff, #fff);
+        linear-gradient(
+            90deg,
+            #fff,
+            #ffabc9,
+            #bcaeff,
+            #fff
+        );
 
     background-size: 300%;
 
     -webkit-background-clip: text;
+
     background-clip: text;
 
     color: transparent;
 
-    animation: gradientText 7s ease infinite;
+    animation:
+        gradient 8s ease infinite,
+        fadeUp 1s .1s ease both;
 }
 
-@keyframes gradientText {
+.hero-subtitle {
+    max-width: 680px;
+
+    margin-top: 30px;
+
+    color: var(--muted);
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 22px;
+
+    line-height: 1.65;
+
+    animation:
+        fadeUp 1s .25s ease both;
+}
+
+.hero-scroll {
+    margin-top: 55px;
+
+    color: var(--dim);
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    animation:
+        fadeUp 1s .4s ease both,
+        bounce 2s 1s infinite;
+}
+
+@keyframes gradient {
+
     0%,100% {
         background-position: 0%;
     }
@@ -346,27 +577,29 @@ body {
     50% {
         background-position: 100%;
     }
+
 }
 
-.hero p {
-    max-width: 700px;
-    margin-top: 30px;
+@keyframes fadeUp {
 
-    color: var(--muted);
+    from {
+        opacity: 0;
 
-    line-height: 1.9;
-    font-size: 15px;
-}
+        transform:
+            translateY(25px);
+    }
 
-.scroll-down {
-    margin-top: 45px;
-    color: #8d7b89;
-    font-size: 12px;
+    to {
+        opacity: 1;
 
-    animation: bounce 2s infinite;
+        transform:
+            translateY(0);
+    }
+
 }
 
 @keyframes bounce {
+
     0%,100% {
         transform: translateY(0);
     }
@@ -374,56 +607,93 @@ body {
     50% {
         transform: translateY(8px);
     }
+
 }
 
-/* =========================
-   TITRES
-========================= */
+/* =========================================================
+   SECTION HEADER
+========================================================= */
 
-.section-title {
+.section {
+    margin-top: 130px;
+}
+
+.section-header {
     text-align: center;
-    margin-bottom: 35px;
+
+    margin-bottom: 42px;
 }
 
-.section-title span {
-    color: var(--pink-light);
-    font-size: 11px;
+.eyebrow {
+    color: var(--pink2);
+
+    font-size: 10px;
+
     letter-spacing: 4px;
+
     text-transform: uppercase;
 }
 
-.section-title h2 {
+.section-header h2 {
     margin-top: 10px;
 
-    font-family: "Cormorant Garamond", serif;
-    font-size: 45px;
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(40px, 6vw, 58px);
+
     font-weight: 600;
+
+    line-height: 1;
 }
 
-/* =========================
-   CARDS
-========================= */
+.section-header p {
+    max-width: 600px;
 
-.cards {
+    margin:
+        18px
+        auto
+        0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+/* =========================================================
+   LETTER GRID
+========================================================= */
+
+.letters-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 18px;
 }
 
-.card {
+.letter-card {
     position: relative;
 
-    min-height: 220px;
-    padding: 28px;
+    min-height: 235px;
 
-    border: 1px solid var(--border);
+    padding: 30px;
+
+    border:
+        1px solid var(--border);
+
     border-radius: 30px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.035)
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.025)
         );
 
     backdrop-filter: blur(18px);
@@ -433,246 +703,647 @@ body {
     cursor: pointer;
 
     transition:
-        transform .45s cubic-bezier(.2,.8,.2,1),
+        transform .5s cubic-bezier(.2,.8,.2,1),
         background .4s,
-        border-color .4s,
+        border .4s,
         box-shadow .4s;
-
-    animation: cardAppear .8s ease both;
 }
 
-.card:nth-child(1) { animation-delay: .03s; }
-.card:nth-child(2) { animation-delay: .06s; }
-.card:nth-child(3) { animation-delay: .09s; }
-.card:nth-child(4) { animation-delay: .12s; }
-.card:nth-child(5) { animation-delay: .15s; }
-.card:nth-child(6) { animation-delay: .18s; }
-.card:nth-child(7) { animation-delay: .21s; }
-.card:nth-child(8) { animation-delay: .24s; }
-.card:nth-child(9) { animation-delay: .27s; }
-.card:nth-child(10) { animation-delay: .30s; }
-.card:nth-child(11) { animation-delay: .33s; }
-.card:nth-child(12) { animation-delay: .36s; }
-.card:nth-child(13) { animation-delay: .39s; }
-.card:nth-child(14) { animation-delay: .42s; }
-.card:nth-child(15) { animation-delay: .45s; }
-.card:nth-child(16) { animation-delay: .48s; }
-.card:nth-child(17) { animation-delay: .51s; }
-.card:nth-child(18) { animation-delay: .54s; }
+.letter-card::before {
+    content: "";
 
-@keyframes cardAppear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.card:hover {
-    transform: translateY(-10px);
-
-    background: var(--glass-hover);
-
-    border-color: rgba(255,170,205,.3);
-
-    box-shadow: 0 25px 60px rgba(0,0,0,.25);
-}
-
-.card-glow {
     position: absolute;
 
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 150px;
+
+    right: -90px;
+    top: -90px;
 
     border-radius: 50%;
 
-    right: -100px;
-    top: -100px;
-
-    background: rgba(255,130,180,.13);
-
-    filter: blur(10px);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,130,180,.25),
+            transparent 70%
+        );
 
     transition: .6s;
 }
 
-.card:hover .card-glow {
-    transform: scale(2.1);
+.letter-card:hover {
+    transform:
+        translateY(-10px);
+
+    background:
+        var(--card-hover);
+
+    border-color:
+        rgba(255,170,205,.3);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.3);
 }
 
-.card-icon {
-    position: relative;
+.letter-card:hover::before {
+    transform: scale(2);
+}
 
-    font-size: 43px;
+.letter-icon {
+    font-size: 42px;
 
     margin-bottom: 20px;
 
-    transition: transform .4s;
+    transition:
+        transform .4s;
 }
 
-.card:hover .card-icon {
-    transform: scale(1.15) rotate(-5deg);
+.letter-card:hover .letter-icon {
+    transform:
+        scale(1.15)
+        rotate(-5deg);
 }
 
-.card h3 {
-    position: relative;
-
-    font-family: "Cormorant Garamond", serif;
+.letter-card h3 {
+    font-family:
+        "Cormorant Garamond",
+        serif;
 
     font-size: 29px;
-    line-height: 1.1;
 
-    margin-bottom: 10px;
+    line-height: 1.05;
+
+    font-weight: 600;
 }
 
-.card p {
-    position: relative;
+.letter-card p {
+    margin-top: 12px;
 
     color: var(--muted);
-
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-.card.special {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,112,165,.13),
-            rgba(128,91,255,.13)
-        );
-
-    border-color: rgba(255,170,205,.25);
-}
-
-/* =========================
-   COMPTEUR
-========================= */
-
-.counter-section {
-    margin-top: 110px;
-
-    padding: 50px 30px;
-
-    text-align: center;
-
-    border: 1px solid var(--border);
-    border-radius: 35px;
-
-    background: rgba(255,255,255,.045);
-
-    backdrop-filter: blur(20px);
-}
-
-.counter-title {
-    color: var(--pink-light);
 
     font-size: 12px;
 
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
+    line-height: 1.7;
 }
 
-.counter-date {
-    color: var(--muted);
+.letter-arrow {
+    position: absolute;
 
-    margin-top: 10px;
+    right: 24px;
+    bottom: 22px;
 
-    font-size: 13px;
+    color: #766977;
+
+    font-size: 18px;
+
+    transition: .3s;
 }
 
-.counter {
-    display: grid;
+.letter-card:hover .letter-arrow {
+    color: var(--pink2);
 
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 15px;
-
-    max-width: 700px;
-
-    margin: 35px auto 0;
+    transform:
+        translateX(5px);
 }
+
+/* =========================================================
+   SPECIAL CARD
+========================================================= */
+
+.letter-card.special {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,105,160,.12),
+            rgba(122,94,255,.12)
+        );
+
+    border-color:
+        rgba(255,170,205,.2);
+}
+
+/* =========================================================
+   COUNTER
+========================================================= */
 
 .counter-box {
-    padding: 22px 10px;
-
-    border-radius: 20px;
-
-    background: rgba(255,255,255,.06);
-}
-
-.counter-number {
-    font-family: "Cormorant Garamond", serif;
-
-    font-size: 42px;
-
-    color: #fff;
-}
-
-.counter-label {
-    color: #988693;
-
-    font-size: 10px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 2px;
-}
-
-/* =========================
-   PHOTOS
-========================= */
-
-.photos {
-    margin-top: 110px;
-}
-
-.photo-grid {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 18px;
-}
-
-.photo {
     position: relative;
 
-    height: 260px;
+    padding:
+        65px
+        35px;
 
-    overflow: hidden;
+    border:
+        1px solid var(--border);
 
-    border-radius: 28px;
-
-    border: 1px solid var(--border);
+    border-radius: 40px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(255,145,185,.13),
-            rgba(150,120,255,.13)
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.025)
         );
+
+    backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        var(--shadow);
+
+    overflow: hidden;
+
+    text-align: center;
+}
+
+.counter-box::before {
+    content: "∞";
+
+    position: absolute;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 260px;
+
+    line-height: 1;
+
+    right: -20px;
+    bottom: -100px;
+
+    color:
+        rgba(255,255,255,.025);
+}
+
+.counter-heading {
+    position: relative;
+
+    color: var(--pink2);
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+.counter-heading strong {
+    display: block;
+
+    margin-top: 12px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    color: white;
+
+    font-size: 31px;
+
+    letter-spacing: 0;
+
+    text-transform: none;
+}
+
+.counter-date {
+    margin-top: 10px;
+
+    color: var(--dim);
+
+    font-size: 11px;
+}
+
+.timer {
+    position: relative;
+
+    max-width: 800px;
+
+    margin:
+        40px
+        auto
+        0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.time {
+    padding: 22px 10px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.07);
+}
+
+.time-number {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 45px;
+
+    font-weight: 600;
+}
+
+.time-label {
+    margin-top: 4px;
+
+    color: var(--dim);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   LOVE REASONS
+========================================================= */
+
+.reasons {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+.reason {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    padding: 25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    transition: .4s;
+}
+
+.reason:hover {
+    transform:
+        translateX(6px);
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.reason-number {
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
+    border-radius: 50%;
+
+    background:
+        rgba(255,135,180,.12);
+
+    color: var(--pink2);
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 19px;
+}
+
+.reason h3 {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 23px;
+}
+
+.reason p {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   RANDOM MESSAGE
+========================================================= */
+
+.random-box {
+    padding: 60px 30px;
+
+    text-align: center;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,115,170,.09),
+            rgba(126,96,255,.08)
+        );
+}
+
+.random-message {
+    max-width: 750px;
+
+    min-height: 85px;
+
+    margin:
+        25px
+        auto
+        30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(25px, 4vw, 35px);
+
+    line-height: 1.35;
+
+    transition:
+        opacity .25s,
+        transform .25s;
+}
+
+.random-message.change {
+    opacity: 0;
+
+    transform:
+        translateY(8px);
+}
+
+.magic-button {
+    border: none;
+
+    padding:
+        14px
+        25px;
+
+    border-radius: 100px;
+
+    background:
+        linear-gradient(
+            100deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 35px rgba(255,120,175,.18);
+
+    transition: .3s;
+}
+
+.magic-button:hover {
+    transform:
+        translateY(-3px)
+        scale(1.02);
+
+    box-shadow:
+        0 15px 45px rgba(255,120,175,.28);
+}
+
+/* =========================================================
+   MEMORIES
+========================================================= */
+
+.memory-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.memory {
+    position: relative;
+
+    min-height: 260px;
+
+    padding: 28px;
+
+    border-radius: 30px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.045);
+
+    overflow: hidden;
+
+    transition: .4s;
+}
+
+.memory:hover {
+    transform:
+        translateY(-7px);
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+.memory-date {
+    color: var(--pink2);
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.memory h3 {
+    margin-top: 20px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 30px;
+}
+
+.memory p {
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+.memory-symbol {
+    position: absolute;
+
+    right: 22px;
+    bottom: 15px;
+
+    font-size: 65px;
+
+    opacity: .08;
+}
+
+/* =========================================================
+   PERSONAL LETTER
+========================================================= */
+
+.personal {
+    padding:
+        65px
+        clamp(25px, 7vw, 80px);
+
+    border:
+        1px solid rgba(255,170,205,.18);
+
+    border-radius: 40px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,110,165,.08),
+            rgba(125,95,255,.07)
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+.personal-top {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.personal-icon {
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+.personal h2 {
+    font-family:
+        "Pacifico",
+        cursive;
+
+    font-size:
+        clamp(32px, 5vw, 52px);
+
+    font-weight: 400;
+
+    color: var(--pink2);
+}
+
+.personal-content {
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(20px, 3vw, 25px);
+
+    line-height: 1.8;
+
+    color: #e9dfe7;
+
+    white-space: pre-line;
+}
+
+/* =========================================================
+   PHOTO SECTION
+========================================================= */
+
+.photo-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr
+        1fr
+        1fr;
+
+    grid-auto-rows: 230px;
+
+    gap: 15px;
+}
+
+.photo {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,130,180,.1),
+            rgba(130,105,255,.1)
+        );
+
     cursor: pointer;
 
     transition: .4s;
 }
 
+.photo:first-child {
+    grid-row:
+        span 2;
+}
+
 .photo:hover {
-    transform: translateY(-7px);
+    transform:
+        scale(1.015);
 
     border-color:
-        rgba(255,175,205,.35);
+        rgba(255,170,205,.3);
 }
 
 .photo img {
@@ -681,103 +1352,169 @@ body {
 
     object-fit: cover;
 
-    transition: .5s;
+    transition:
+        transform .6s;
 }
 
 .photo:hover img {
-    transform: scale(1.06);
+    transform:
+        scale(1.07);
 }
 
 .photo-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
 
-    color: #aa97a7;
+    color: var(--dim);
 
-    padding: 20px;
+    padding: 25px;
 }
 
-.photo-placeholder div {
-    font-size: 45px;
+.photo-placeholder span {
+    font-size: 48px;
 
     margin-bottom: 12px;
 }
 
 .photo-placeholder p {
-    font-size: 12px;
+    font-size: 11px;
+
     line-height: 1.6;
 }
 
-/* =========================
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    margin-top: 130px;
+
+    padding:
+        40px
+        0;
+
+    text-align: center;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+
+    color: var(--dim);
+
+    font-size: 11px;
+
+    line-height: 2;
+}
+
+footer strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #a28f9f;
+
+    font-family:
+        "Pacifico",
+        cursive;
+
+    font-size: 19px;
+
+    font-weight: 400;
+}
+
+.footer-heart {
+    color: var(--pink);
+
+    font-size: 18px;
+}
+
+/* =========================================================
    MODAL
-========================= */
+========================================================= */
 
 .modal {
     position: fixed;
 
     inset: 0;
 
-    z-index: 500;
+    z-index: 5000;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    padding: 20px;
+    padding: 18px;
 
-    background: rgba(6,3,10,.82);
+    background:
+        rgba(5,3,8,.84);
 
-    backdrop-filter: blur(15px);
+    backdrop-filter:
+        blur(16px);
 
     opacity: 0;
 
     visibility: hidden;
 
     transition:
-        opacity .4s,
-        visibility .4s;
+        opacity .35s,
+        visibility .35s;
 }
 
-.modal.active {
+.modal.open {
     opacity: 1;
+
     visibility: visible;
 }
 
-.modal-box {
+.modal-inner {
     position: relative;
 
-    width: min(800px, 100%);
+    width:
+        min(850px, 100%);
 
-    max-height: 88vh;
+    max-height: 90vh;
 
     overflow-y: auto;
 
-    padding: 50px 55px;
-
-    border-radius: 35px;
+    padding:
+        50px
+        clamp(25px, 7vw, 65px)
+        35px;
 
     border:
-        1px solid rgba(255,255,255,.15);
+        1px solid rgba(255,255,255,.14);
+
+    border-radius: 38px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(48,27,55,.98),
-            rgba(20,13,29,.98)
+            rgba(44,25,51,.98),
+            rgba(16,10,23,.98)
         );
 
     box-shadow:
-        0 40px 120px rgba(0,0,0,.6);
+        0 50px 150px rgba(0,0,0,.6);
 
     transform:
-        translateY(40px)
+        translateY(35px)
         scale(.94);
 
     transition:
         transform .5s cubic-bezier(.2,.8,.2,1);
 }
 
-.modal.active .modal-box {
+.modal.open .modal-inner {
     transform:
         translateY(0)
         scale(1);
@@ -787,100 +1524,78 @@ body {
     position: absolute;
 
     top: 18px;
-    right: 20px;
+    right: 18px;
 
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
 
     border: none;
 
     border-radius: 50%;
 
-    color: white;
-
     background:
         rgba(255,255,255,.07);
 
-    cursor: pointer;
+    color: white;
 
-    font-size: 18px;
+    font-size: 20px;
+
+    cursor: pointer;
 
     transition: .3s;
 }
 
 .modal-close:hover {
-    transform: rotate(90deg);
+    transform:
+        rotate(90deg);
 
     background:
-        rgba(255,255,255,.15);
+        rgba(255,255,255,.14);
 }
 
 .modal-icon {
     text-align: center;
 
-    font-size: 60px;
+    font-size: 62px;
 
-    margin-bottom: 8px;
-
-    animation: modalIcon .7s ease;
-}
-
-@keyframes modalIcon {
-    from {
-        transform: scale(.5) rotate(-15deg);
-        opacity: 0;
-    }
-
-    70% {
-        transform: scale(1.15) rotate(5deg);
-    }
-
-    to {
-        transform: scale(1) rotate(0);
-        opacity: 1;
-    }
+    animation:
+        modalIcon .6s ease;
 }
 
 .modal-title {
+    margin-top: 12px;
+
     text-align: center;
 
-    font-family: "Pacifico", cursive;
+    font-family:
+        "Pacifico",
+        cursive;
 
-    font-size: clamp(30px,5vw,45px);
+    font-size:
+        clamp(30px, 5vw, 46px);
 
     font-weight: 400;
 
-    color: var(--pink-light);
-
-    margin-bottom: 30px;
+    color: var(--pink2);
 }
 
-.progress {
-    width: 100%;
-    height: 3px;
+.modal-line {
+    width: 80px;
 
-    background: rgba(255,255,255,.08);
+    height: 2px;
 
-    border-radius: 20px;
-
-    margin-bottom: 28px;
-}
-
-.progress-bar {
-    width: 0%;
-
-    height: 100%;
-
-    border-radius: inherit;
+    margin:
+        24px
+        auto
+        30px;
 
     background:
         linear-gradient(
             90deg,
+            transparent,
             var(--pink),
-            var(--purple)
+            transparent
         );
-
-    transition: width .2s;
 }
 
 .modal-text {
@@ -888,158 +1603,178 @@ body {
         "Cormorant Garamond",
         serif;
 
-    font-size: 22px;
+    font-size:
+        clamp(20px, 3vw, 24px);
 
-    line-height: 1.8;
+    line-height: 1.85;
 
-    color: #eadfe8;
+    color: #eadfe7;
 
     white-space: pre-line;
-
-    min-height: 200px;
 }
 
-.typing-cursor {
-    display: inline-block;
-
-    width: 2px;
-    height: 22px;
-
-    margin-left: 3px;
-
-    background: var(--pink);
-
-    animation: blink .8s infinite;
-}
-
-@keyframes blink {
-    0%,50% { opacity: 1; }
-    51%,100% { opacity: 0; }
-}
-
-.modal-bottom {
+.modal-footer {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
+
+    gap: 15px;
 
     margin-top: 35px;
 
-    gap: 15px;
+    padding-top: 20px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
 }
 
-.reading {
-    color: #887687;
+.modal-footer span {
+    color: var(--dim);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
-.close-button {
+.modal-button {
     border: none;
 
-    padding: 13px 25px;
+    padding:
+        12px
+        21px;
 
     border-radius: 100px;
 
-    color: white;
+    background:
+        rgba(255,255,255,.08);
 
-    background: rgba(255,255,255,.08);
+    color: white;
 
     cursor: pointer;
 
     transition: .3s;
 }
 
-.close-button:hover {
-    background: rgba(255,255,255,.15);
-
-    transform: translateY(-2px);
+.modal-button:hover {
+    background:
+        rgba(255,255,255,.14);
 }
 
-/* =========================
+/* =========================================================
    SURPRISE
-========================= */
+========================================================= */
 
-.surprise-box {
+.surprise {
     text-align: center;
 }
 
-.surprise-heart {
+.surprise-big {
     font-size: 100px;
 
-    margin: 10px 0 25px;
-
-    animation: heartbeat 1.3s infinite;
+    animation:
+        heartbeat 1.2s infinite;
 }
 
-.surprise-box h2 {
-    font-family: "Pacifico", cursive;
+.surprise h3 {
+    margin-top: 15px;
+
+    font-family:
+        "Pacifico",
+        cursive;
+
+    font-size: 40px;
 
     font-weight: 400;
 
-    font-size: 42px;
-
-    color: var(--pink-light);
+    color: var(--pink2);
 }
 
-.surprise-box p {
+.surprise p {
     margin-top: 20px;
 
     color: var(--muted);
 
-    line-height: 1.9;
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 23px;
+
+    line-height: 1.7;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* =========================================================
+   MODAL ANIMATION
+========================================================= */
 
-footer {
-    text-align: center;
+@keyframes modalIcon {
 
-    margin-top: 100px;
+    from {
+        opacity: 0;
 
-    padding-bottom: 30px;
+        transform:
+            scale(.5)
+            rotate(-15deg);
+    }
 
-    color: #70606e;
+    70% {
+        transform:
+            scale(1.1)
+            rotate(5deg);
+    }
 
-    font-size: 12px;
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0);
+    }
+
 }
 
-footer .heart {
-    color: var(--pink);
-
-    font-size: 18px;
-}
-
-/* =========================
+/* =========================================================
    RESPONSIVE
-========================= */
+========================================================= */
 
 @media(max-width: 900px) {
 
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
+    .letters-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .memory-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
     }
 
     .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            1fr 1fr;
     }
+
+    .photo:first-child {
+        grid-row: span 1;
+    }
+
 }
 
-@media(max-width: 600px) {
+@media(max-width: 650px) {
 
     .navbar {
-        top: 10px;
+        width: 94%;
     }
 
-    .logo {
-        font-size: 16px;
+    .nav-links {
+        display: none;
     }
 
-    .page {
+    main {
         width: 90%;
-        padding-top: 100px;
+
+        padding-top:
+            100px;
     }
 
     .hero {
@@ -1047,45 +1782,87 @@ footer .heart {
     }
 
     .hero h1 {
-        font-size: 55px;
+        font-size: 58px;
     }
 
-    .cards {
+    .hero-subtitle {
+        font-size: 19px;
+    }
+
+    .letters-grid {
         grid-template-columns: 1fr;
     }
 
-    .card {
-        min-height: 190px;
+    .letter-card {
+        min-height: 205px;
     }
 
-    .counter {
-        grid-template-columns: repeat(2, 1fr);
+    .timer {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .time-number {
+        font-size: 38px;
+    }
+
+    .reasons {
+        grid-template-columns: 1fr;
+    }
+
+    .memory-grid {
+        grid-template-columns: 1fr;
     }
 
     .photo-grid {
         grid-template-columns: 1fr;
+
+        grid-auto-rows: 240px;
     }
 
-    .modal-box {
-        padding: 45px 24px 30px;
+    .personal {
+        padding:
+            45px
+            22px;
     }
 
-    .modal-text {
-        font-size: 20px;
-        line-height: 1.7;
+    .modal-inner {
+        padding:
+            45px
+            22px
+            25px;
     }
 
-    .modal-bottom {
+    .modal-footer {
         flex-direction: column;
+
+        align-items: stretch;
     }
 
-    .close-button {
+    .modal-button {
         width: 100%;
     }
 
-    .cursor-glow {
-        display: none;
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: .01ms !important;
     }
+
 }
 
 </style>
@@ -1093,48 +1870,48 @@ footer .heart {
 
 <body>
 
-<!-- =========================
-     LOADING
-========================= -->
 
-<div id="loadingScreen">
+<!-- =====================================================
+     LOADER
+===================================================== -->
 
-    <div class="loading-heart">
+<div id="loader">
+
+    <div class="loader-heart">
         💗
     </div>
 
-    <div class="loading-text">
-        quelque chose arrive...
+    <div class="loader-title">
+        Un petit endroit pour toi...
     </div>
 
-    <div class="loading-dots">
-        • • •
+    <div class="loader-small">
+        chargement de quelques souvenirs
     </div>
 
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      BACKGROUND
-========================= -->
+===================================================== -->
 
-<div class="background">
+<div class="bg">
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+    <div class="orb one"></div>
 
-    <div id="particles"></div>
+    <div class="orb two"></div>
+
+    <div class="orb three"></div>
 
 </div>
 
+<div id="hearts"></div>
 
-<div class="cursor-glow" id="cursorGlow"></div>
 
-
-<!-- =========================
+<!-- =====================================================
      NAVBAR
-========================= -->
+===================================================== -->
 
 <nav class="navbar">
 
@@ -1142,678 +1919,1246 @@ footer .heart {
         Pour toi 💗
     </div>
 
-    <div class="nav-actions">
+    <div class="nav-links">
 
         <button
-            class="nav-btn"
-            onclick="scrollToLetters()"
-            title="Lettres">
-            💌
+            class="nav-link"
+            onclick="goTo('letters')">
+            Lettres
         </button>
 
         <button
-            class="nav-btn"
-            onclick="scrollToPhotos()"
-            title="Photos">
-            📸
+            class="nav-link"
+            onclick="goTo('counter')">
+            Notre histoire
         </button>
 
         <button
-            class="nav-btn"
-            onclick="showSurprise()"
-            title="Surprise">
-            🎁
+            class="nav-link"
+            onclick="goTo('memories')">
+            Souvenirs
+        </button>
+
+        <button
+            class="nav-link"
+            onclick="goTo('personal')">
+            Pour toi
         </button>
 
     </div>
+
+    <button
+        class="nav-heart"
+        onclick="surprise()">
+        💌
+    </button>
 
 </nav>
 
 
-<!-- =========================
-     PAGE
-========================= -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-<main class="page">
+<main>
 
+
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section class="hero">
 
-    <div class="hero-label">
+    <div class="hero-badge">
         un petit endroit rien que pour toi
     </div>
 
     <h1>
-        Pour toi 💗
+        Pour toi
     </h1>
 
-    <p>
-        J'ai créé cet endroit pour toi.
-        Pour les jours où tu es triste,
-        quand tu stresses,
-        quand tu t'ennuies,
-        quand je te manque,
-        quand tu as besoin d'amour,
-        ou simplement quand tu veux lire
-        quelque chose qui vient de moi.
+    <p class="hero-subtitle">
+        J'ai créé cet endroit pour que tu puisses
+        toujours avoir un petit morceau de moi
+        quelque part.
+        <br><br>
+        Peu importe ton humeur,
+        il y aura toujours une petite lettre
+        qui t'attendra ici. 💗
     </p>
 
-    <div class="scroll-down">
-        ↓ découvre ton petit monde ↓
+    <div class="hero-scroll">
+        ↓ fais défiler ↓
     </div>
 
 </section>
 
 
-<!-- =========================
-     LETTRES
-========================= -->
+<!-- =====================================================
+     LETTERS
+===================================================== -->
 
-<section id="letters">
+<section
+    class="section"
+    id="letters">
 
-<div class="section-title">
+    <div class="section-header">
 
-    <span>
-        ouvre celle dont tu as besoin
-    </span>
+        <div class="eyebrow">
+            ouvre celle dont tu as besoin
+        </div>
 
-    <h2>
-        Tes petites lettres 💌
-    </h2>
+        <h2>
+            Tes petites lettres 💌
+        </h2>
 
-</div>
+        <p>
+            Il y en a pour les bons jours,
+            les mauvais jours,
+            les moments où tu penses trop
+            et même ceux où tu veux simplement
+            venir lire quelque chose de moi.
+        </p>
 
+    </div>
 
-<div class="cards">
 
+    <div class="letters-grid">
 
-<!-- 1 -->
 
-<div class="card" onclick="openLetter('sad')">
+        <!-- SAD -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('sad')">
 
-<div class="card-icon">🥺</div>
+            <div class="letter-icon">
+                🥺
+            </div>
 
-<h3>
-    Quand tu es triste
-</h3>
+            <h3>
+                Quand tu es triste
+            </h3>
 
-<p>
-    Pour les jours où tu as besoin
-    d'un peu de réconfort.
-</p>
+            <p>
+                Pour les journées où tu as besoin
+                de réconfort et de quelques mots doux.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 2 -->
 
-<div class="card" onclick="openLetter('angry')">
+        <!-- ANGRY -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('angry')">
 
-<div class="card-icon">😡</div>
+            <div class="letter-icon">
+                😡
+            </div>
 
-<h3>
-    Quand tu es en colère
-</h3>
+            <h3>
+                Quand tu es en colère
+            </h3>
 
-<p>
-    Pour laisser retomber la pression.
-</p>
+            <p>
+                Pour souffler un peu et laisser
+                la pression redescendre.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 3 -->
 
-<div class="card" onclick="openLetter('love')">
+        <!-- LOVE -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card special"
+            onclick="openLetter('love')">
 
-<div class="card-icon">💕</div>
+            <div class="letter-icon">
+                💕
+            </div>
 
-<h3>
-    Quand tu manques d'amour
-</h3>
+            <h3>
+                Quand tu manques d'amour
+            </h3>
 
-<p>
-    Un rappel de toute l'affection
-    que tu mérites.
-</p>
+            <p>
+                Parce qu'il y a des jours où
+                un rappel d'amour fait du bien.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 4 -->
 
-<div class="card" onclick="openLetter('bored')">
+        <!-- BORED -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('bored')">
 
-<div class="card-icon">😴</div>
+            <div class="letter-icon">
+                😴
+            </div>
 
-<h3>
-    Quand tu t'ennuies
-</h3>
+            <h3>
+                Quand tu t'ennuies
+            </h3>
 
-<p>
-    Parce qu'il faut bien trouver
-    quelque chose à faire. 😭
-</p>
+            <p>
+                Une petite lettre complètement
+                inutile mais probablement drôle.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 5 -->
 
-<div class="card" onclick="openLetter('hug')">
+        <!-- HUG -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('hug')">
 
-<div class="card-icon">🫂</div>
+            <div class="letter-icon">
+                🫂
+            </div>
 
-<h3>
-    Quand tu as besoin d'un câlin
-</h3>
+            <h3>
+                Quand tu veux un câlin
+            </h3>
 
-<p>
-    Un énorme câlin virtuel.
-</p>
+            <p>
+                Un énorme câlin virtuel t'attend ici.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 6 -->
 
-<div class="card" onclick="openLetter('sleep')">
+        <!-- SLEEP -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('sleep')">
 
-<div class="card-icon">🌙</div>
+            <div class="letter-icon">
+                🌙
+            </div>
 
-<h3>
-    Quand tu n'arrives pas à dormir
-</h3>
+            <h3>
+                Quand tu n'arrives pas à dormir
+            </h3>
 
-<p>
-    Une petite lettre pour
-    terminer doucement la journée.
-</p>
+            <p>
+                Pour terminer doucement ta journée.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 7 -->
 
-<div class="card" onclick="openLetter('miss')">
+        <!-- MISS -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card special"
+            onclick="openLetter('miss')">
 
-<div class="card-icon">💭</div>
+            <div class="letter-icon">
+                💭
+            </div>
 
-<h3>
-    Quand je te manque
-</h3>
+            <h3>
+                Quand je te manque
+            </h3>
 
-<p>
-    Pour les moments où tu aimerais
-    que je sois à côté de toi.
-</p>
+            <p>
+                Pour les moments où tu aimerais
+                que je sois juste à côté.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 8 -->
 
-<div class="card" onclick="openLetter('stress')">
+        <!-- STRESS -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('stress')">
 
-<div class="card-icon">🫨</div>
+            <div class="letter-icon">
+                🫨
+            </div>
 
-<h3>
-    Quand tu es stressée
-</h3>
+            <h3>
+                Quand tu es stressée
+            </h3>
 
-<p>
-    Une chose à la fois.
-    Respire.
-</p>
+            <p>
+                Respire. Une chose à la fois.
+                Tu n'as pas besoin de tout régler.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 9 -->
 
-<div class="card" onclick="openLetter('doubt')">
+        <!-- DOUBT -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('doubt')">
 
-<div class="card-icon">🥹</div>
+            <div class="letter-icon">
+                🥹
+            </div>
 
-<h3>
-    Quand tu doutes de toi
-</h3>
+            <h3>
+                Quand tu doutes de toi
+            </h3>
 
-<p>
-    Pour te rappeler toutes les choses
-    qui font de toi quelqu'un d'unique.
-</p>
+            <p>
+                Pour te rappeler toutes les petites
+                choses qui font que tu es toi.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 10 -->
 
-<div class="card" onclick="openLetter('overthink')">
+        <!-- OVERTHINK -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('overthink')">
 
-<div class="card-icon">🧠</div>
+            <div class="letter-icon">
+                🧠
+            </div>
 
-<h3>
-    Quand tu penses trop
-</h3>
+            <h3>
+                Quand tu penses trop
+            </h3>
 
-<p>
-    Pour faire une petite pause
-    dans toutes ces pensées.
-</p>
+            <p>
+                Pour mettre ton cerveau en pause
+                pendant quelques minutes.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 11 -->
 
-<div class="card" onclick="openLetter('motivation')">
+        <!-- MOTIVATION -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('motivation')">
 
-<div class="card-icon">🌟</div>
+            <div class="letter-icon">
+                🌟
+            </div>
 
-<h3>
-    Quand tu as besoin de motivation
-</h3>
+            <h3>
+                Quand tu as besoin de motivation
+            </h3>
 
-<p>
-    Pour te rappeler que tu peux
-    avancer petit à petit.
-</p>
+            <p>
+                Parce que même les petits progrès
+                comptent énormément.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 12 -->
 
-<div class="card" onclick="openLetter('proud')">
+        <!-- PROUD -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('proud')">
 
-<div class="card-icon">🏆</div>
+            <div class="letter-icon">
+                🏆
+            </div>
 
-<h3>
-    Quand tu es fière de toi
-</h3>
+            <h3>
+                Quand tu es fière de toi
+            </h3>
 
-<p>
-    Une lettre pour célébrer
-    tout ce que tu as accompli.
-</p>
+            <p>
+                Une petite célébration pour
+                tous les efforts que tu fais.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 13 -->
 
-<div class="card" onclick="openLetter('laugh')">
+        <!-- LAUGH -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('laugh')">
 
-<div class="card-icon">😂</div>
+            <div class="letter-icon">
+                😂
+            </div>
 
-<h3>
-    Quand tu veux rire
-</h3>
+            <h3>
+                Quand tu veux rire
+            </h3>
 
-<p>
-    Attention, contenu potentiellement
-    complètement débile.
-</p>
+            <p>
+                Probablement la lettre la moins
+                sérieuse de tout le site.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 14 -->
 
-<div class="card" onclick="openLetter('fight')">
+        <!-- FIGHT -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('fight')">
 
-<div class="card-icon">💌</div>
+            <div class="letter-icon">
+                💌
+            </div>
 
-<h3>
-    Après une dispute
-</h3>
+            <h3>
+                Après une dispute
+            </h3>
 
-<p>
-    Parce qu'une dispute ne change
-    pas ce que tu représentes pour moi.
-</p>
+            <p>
+                Parce qu'un mauvais moment
+                n'efface pas tous les bons.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 15 -->
 
-<div class="card" onclick="openLetter('admire')">
+        <!-- ADMIRE -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card special"
+            onclick="openLetter('admire')">
 
-<div class="card-icon">✨</div>
+            <div class="letter-icon">
+                ✨
+            </div>
 
-<h3>
-    Ce que j'admire chez toi
-</h3>
+            <h3>
+                Ce que j'admire chez toi
+            </h3>
 
-<p>
-    Toutes ces petites choses
-    que j'aime particulièrement chez toi.
-</p>
+            <p>
+                Toutes ces petites choses
+                que tu ne remarques peut-être pas.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 16 -->
 
-<div class="card" onclick="openLetter('memories')">
+        <!-- MEMORIES LETTER -->
 
-<div class="card-glow"></div>
+        <div
+            class="letter-card"
+            onclick="openLetter('memoriesLetter')">
 
-<div class="card-icon">📖</div>
+            <div class="letter-icon">
+                📖
+            </div>
 
-<h3>
-    Nos souvenirs
-</h3>
+            <h3>
+                Nos souvenirs
+            </h3>
 
-<p>
-    Les moments que je veux
-    garder longtemps.
-</p>
+            <p>
+                Parce que certains petits moments
+                méritent de rester quelque part.
+            </p>
 
-</div>
+            <div class="letter-arrow">
+                →
+            </div>
 
+        </div>
 
-<!-- 17 -->
 
-<div class="card special" onclick="openLetter('personal')">
-
-<div class="card-glow"></div>
-
-<div class="card-icon">💌</div>
-
-<h3>
-    Ma touche personnelle
-</h3>
-
-<p>
-    Celle-ci vient entièrement
-    de moi.
-</p>
-
-</div>
-
-
-<!-- 18 -->
-
-<div class="card special" onclick="showSurprise()">
-
-<div class="card-glow"></div>
-
-<div class="card-icon">🎁</div>
-
-<h3>
-    La surprise
-</h3>
-
-<p>
-    Tu es sûre de vouloir
-    cliquer ici ? 👀
-</p>
-
-</div>
-
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- =========================
-     COMPTEUR
-========================= -->
+<!-- =====================================================
+     COUNTER
+===================================================== -->
 
-<section class="counter-section">
+<section
+    class="section"
+    id="counter">
 
-<div class="counter-title">
-    depuis le 29 décembre 2025
-</div>
+    <div class="section-header">
 
-<div class="counter-date">
-    21:00:00 — et chaque seconde compte. ❤️
-</div>
+        <div class="eyebrow">
+            depuis le début
+        </div>
 
-<div class="counter">
+        <h2>
+            Notre petit compteur ⏳
+        </h2>
 
-<div class="counter-box">
-
-<div class="counter-number" id="days">
-    0
-</div>
-
-<div class="counter-label">
-    jours
-</div>
-
-</div>
+    </div>
 
 
-<div class="counter-box">
+    <div class="counter-box">
 
-<div class="counter-number" id="hours">
-    00
-</div>
+        <div class="counter-heading">
 
-<div class="counter-label">
-    heures
-</div>
+            Depuis le
 
-</div>
+            <strong>
+                29 décembre 2025
+            </strong>
 
+        </div>
 
-<div class="counter-box">
-
-<div class="counter-number" id="minutes">
-    00
-</div>
-
-<div class="counter-label">
-    minutes
-</div>
-
-</div>
+        <div class="counter-date">
+            21:00:00 — et chaque seconde compte.
+        </div>
 
 
-<div class="counter-box">
+        <div class="timer">
 
-<div class="counter-number" id="seconds">
-    00
-</div>
+            <div class="time">
 
-<div class="counter-label">
-    secondes
-</div>
+                <div
+                    class="time-number"
+                    id="days">
+                    0
+                </div>
 
-</div>
+                <div class="time-label">
+                    jours
+                </div>
 
-</div>
+            </div>
+
+
+            <div class="time">
+
+                <div
+                    class="time-number"
+                    id="hours">
+                    00
+                </div>
+
+                <div class="time-label">
+                    heures
+                </div>
+
+            </div>
+
+
+            <div class="time">
+
+                <div
+                    class="time-number"
+                    id="minutes">
+                    00
+                </div>
+
+                <div class="time-label">
+                    minutes
+                </div>
+
+            </div>
+
+
+            <div class="time">
+
+                <div
+                    class="time-number"
+                    id="seconds">
+                    00
+                </div>
+
+                <div class="time-label">
+                    secondes
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
+     REASONS
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <div class="eyebrow">
+            une petite liste
+        </div>
+
+        <h2>
+            Quelques raisons 💗
+        </h2>
+
+        <p>
+            Parce qu'il serait impossible de tout
+            mettre dans une seule phrase.
+        </p>
+
+    </div>
+
+
+    <div class="reasons">
+
+
+        <div class="reason">
+
+            <div class="reason-number">
+                01
+            </div>
+
+            <div>
+
+                <h3>
+                    Ton rire
+                </h3>
+
+                <p>
+                    Il y a des moments où ton rire
+                    arrive à rendre une journée
+                    beaucoup plus légère.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-number">
+                02
+            </div>
+
+            <div>
+
+                <h3>
+                    Nos discussions
+                </h3>
+
+                <p>
+                    Même quand elles commencent
+                    par quelque chose de complètement
+                    banal et finissent n'importe où.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-number">
+                03
+            </div>
+
+            <div>
+
+                <h3>
+                    Ta personnalité
+                </h3>
+
+                <p>
+                    Tu as ta manière bien à toi
+                    de voir les choses et c'est
+                    une des choses que j'aime.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-number">
+                04
+            </div>
+
+            <div>
+
+                <h3>
+                    Les petits moments
+                </h3>
+
+                <p>
+                    Ceux qui ne semblent pas importants
+                    sur le moment mais qui deviennent
+                    de beaux souvenirs.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-number">
+                05
+            </div>
+
+            <div>
+
+                <h3>
+                    Tes petites habitudes
+                </h3>
+
+                <p>
+                    Ces petits détails qui font que
+                    tu es simplement toi et personne
+                    d'autre.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-number">
+                06
+            </div>
+
+            <div>
+
+                <h3>
+                    Juste toi
+                </h3>
+
+                <p>
+                    Et finalement, c'est peut-être
+                    la raison la plus simple de toutes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RANDOM MESSAGE
+===================================================== -->
+
+<section class="section">
+
+    <div class="random-box">
+
+        <div class="eyebrow">
+            un message au hasard
+        </div>
+
+        <div
+            class="random-message"
+            id="randomMessage">
+            Tu comptes énormément pour moi. ❤️
+        </div>
+
+        <button
+            class="magic-button"
+            onclick="randomMessage()">
+            ✨ Donne-moi un message
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MEMORIES
+===================================================== -->
+
+<section
+    class="section"
+    id="memories">
+
+    <div class="section-header">
+
+        <div class="eyebrow">
+            à compléter avec votre histoire
+        </div>
+
+        <h2>
+            Nos souvenirs 📖
+        </h2>
+
+        <p>
+            Remplace les textes ci-dessous par
+            vos vrais souvenirs, vos dates et
+            vos petits moments préférés.
+        </p>
+
+    </div>
+
+
+    <div class="memory-grid">
+
+
+        <div class="memory">
+
+            <div class="memory-date">
+                souvenir n°01
+            </div>
+
+            <h3>
+                Notre premier moment
+            </h3>
+
+            <p>
+                Écris ici votre souvenir.
+                Raconte ce qui s'est passé,
+                ce que tu as ressenti et pourquoi
+                ce moment est resté dans ta tête.
+            </p>
+
+            <div class="memory-symbol">
+                💗
+            </div>
+
+        </div>
+
+
+        <div class="memory">
+
+            <div class="memory-date">
+                souvenir n°02
+            </div>
+
+            <h3>
+                Un fou rire
+            </h3>
+
+            <p>
+                Le genre de moment où vous avez
+                tellement rigolé que vous ne saviez
+                même plus pourquoi.
+            </p>
+
+            <div class="memory-symbol">
+                😂
+            </div>
+
+        </div>
+
+
+        <div class="memory">
+
+            <div class="memory-date">
+                souvenir n°03
+            </div>
+
+            <h3>
+                Un moment spécial
+            </h3>
+
+            <p>
+                Mets ici un moment que tu aimerais
+                pouvoir revivre exactement comme
+                la première fois.
+            </p>
+
+            <div class="memory-symbol">
+                ✨
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
      PHOTOS
-========================= -->
+===================================================== -->
 
-<section class="photos" id="photos">
+<section class="section">
 
-<div class="section-title">
+    <div class="section-header">
 
-<span>
-    nos petits souvenirs
-</span>
+        <div class="eyebrow">
+            quelques images
+        </div>
 
-<h2>
-    Quelques photos 📸
-</h2>
+        <h2>
+            Nos photos 📸
+        </h2>
 
-</div>
+        <p>
+            Tu peux remplacer les blocs par vos
+            propres photos.
+        </p>
 
-
-<div class="photo-grid">
-
-
-<div class="photo">
-
-<div class="photo-placeholder">
-
-<div>📸</div>
-
-<p>
-    Mets ici une photo de vous.
-</p>
-
-</div>
-
-</div>
+    </div>
 
 
-<div class="photo">
-
-<div class="photo-placeholder">
-
-<div>💗</div>
-
-<p>
-    Une photo d'un moment
-    que tu aimes particulièrement.
-</p>
-
-</div>
-
-</div>
+    <div class="photo-grid">
 
 
-<div class="photo">
+        <div class="photo">
 
-<div class="photo-placeholder">
+            <div class="photo-placeholder">
 
-<div>✨</div>
+                <span>
+                    📸
+                </span>
 
-<p>
-    Une photo complètement
-    random parce que pourquoi pas. 😭
-</p>
+                <p>
+                    Ta photo préférée ici.
+                </p>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
 
-</div>
+        <div class="photo">
+
+            <div class="photo-placeholder">
+
+                <span>
+                    💕
+                </span>
+
+                <p>
+                    Un souvenir.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="photo">
+
+            <div class="photo-placeholder">
+
+                <span>
+                    ✨
+                </span>
+
+                <p>
+                    Un autre moment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="photo">
+
+            <div class="photo-placeholder">
+
+                <span>
+                    🫂
+                </span>
+
+                <p>
+                    Un petit souvenir.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="photo">
+
+            <div class="photo-placeholder">
+
+                <span>
+                    💗
+                </span>
+
+                <p>
+                    Une dernière photo.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
 
 </section>
 
+
+<!-- =====================================================
+     PERSONAL
+===================================================== -->
+
+<section
+    class="section"
+    id="personal">
+
+    <div class="personal">
+
+        <div class="personal-top">
+
+            <div class="personal-icon">
+                💌
+            </div>
+
+            <h2>
+                Ma touche personnelle
+            </h2>
+
+        </div>
+
+
+        <div class="personal-content">
+
+Bon...
+
+Cette partie est probablement la plus importante de tout le site.
+
+Parce que les autres lettres sont là pour les différents moments que tu peux traverser.
+
+Mais celle-ci...
+
+C'est simplement moi qui te parle.
+
+J'ai créé tout ça parce que je voulais avoir un endroit où tu pourrais venir quand tu en as besoin.
+
+Quand tu es triste.
+
+Quand tu stresses.
+
+Quand tu t'ennuies.
+
+Quand tu penses trop.
+
+Quand tu as besoin d'amour.
+
+Quand je te manque.
+
+Ou même quand tout va parfaitement bien et que tu as simplement envie de regarder quelque chose que j'ai fait pour toi.
+
+Je voulais que ce soit plus qu'une simple page internet.
+
+Je voulais que ce soit un petit endroit qui nous appartienne.
+
+Un endroit où je pourrais mettre nos souvenirs, nos photos, mes mots, mes petites idées et toutes ces choses que je n'arrive pas toujours à dire directement.
+
+Et oui...
+
+J'ai probablement passé beaucoup trop de temps dessus. 😭
+
+Mais honnêtement ?
+
+Je ne regrette pas.
+
+Parce que si un jour tu viens ici alors que tu passes une mauvaise journée et que tu arrives à sourire grâce à une seule phrase...
+
+Alors ça aura valu le coup.
+
+Et le plus important...
+
+Ce site n'est pas vraiment terminé.
+
+Parce que notre histoire continue.
+
+Il y aura d'autres souvenirs.
+
+D'autres journées.
+
+D'autres fous rires.
+
+D'autres discussions.
+
+D'autres photos.
+
+D'autres lettres.
+
+Et donc forcément...
+
+D'autres choses à ajouter ici.
+
+J'espère qu'un jour on pourra regarder tout ça ensemble et se rappeler de tous les petits moments qui nous semblaient parfois complètement normaux.
+
+Parce que je crois que ce sont justement ces petits moments qui finissent par devenir les plus importants.
+
+Alors garde cet endroit quelque part.
+
+Reviens quand tu veux.
+
+Et chaque fois que tu verras une nouvelle chose apparaître ici...
+
+Sache qu'elle aura probablement été ajoutée parce que j'aurai pensé à toi.
+
+Je t'aime. ❤️
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
-Fait avec
+    <strong>
+        Pour toi 💗
+    </strong>
 
-<span class="heart">
-    ♥
-</span>
+    Un petit site créé avec beaucoup trop
+    de temps, quelques lignes de code,
+    et surtout beaucoup d'amour.
 
-juste pour toi.
+    <br>
+
+    <span class="footer-heart">
+        ♥
+    </span>
 
 </footer>
+
 
 </main>
 
 
-<!-- =========================
+<!-- =====================================================
      MODAL
-========================= -->
-
-<div class="modal" id="modal">
-
-<div class="modal-box">
-
-<button
-class="modal-close"
-onclick="closeLetter()">
-×
-</button>
-
+===================================================== -->
 
 <div
-class="modal-icon"
-id="modalIcon">
-💗
-</div>
+    class="modal"
+    id="modal">
 
+    <div class="modal-inner">
 
-<h2
-class="modal-title"
-id="modalTitle">
-Pour toi
-</h2>
+        <button
+            class="modal-close"
+            onclick="closeModal()">
+            ×
+        </button>
 
+        <div
+            class="modal-icon"
+            id="modalIcon">
+            💗
+        </div>
 
-<div class="progress">
+        <h2
+            class="modal-title"
+            id="modalTitle">
+            Pour toi
+        </h2>
 
-<div
-class="progress-bar"
-id="progressBar">
-</div>
+        <div class="modal-line"></div>
 
-</div>
+        <div
+            class="modal-text"
+            id="modalText">
+        </div>
 
+        <div class="modal-footer">
 
-<div
-class="modal-text"
-id="modalText">
-</div>
+            <span>
+                une petite lettre rien que pour toi
+            </span>
 
+            <button
+                class="modal-button"
+                onclick="closeModal()">
+                Fermer 💗
+            </button>
 
-<div class="modal-bottom">
+        </div>
 
-<div
-class="reading"
-id="reading">
-lecture...
-</div>
-
-
-<button
-class="close-button"
-onclick="closeLetter()">
-Fermer la lettre 💗
-</button>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
@@ -1821,11 +3166,11 @@ Fermer la lettre 💗
 <script>
 
 /* =========================================================
-   DATE DU COMPTEUR
+   DATE DE DÉPART
 ========================================================= */
 
 const startDate =
-new Date("2025-12-29T21:00:00");
+    new Date("2025-12-29T21:00:00");
 
 
 /* =========================================================
@@ -1834,62 +3179,55 @@ new Date("2025-12-29T21:00:00");
 
 const letters = {
 
-
 sad: {
 
 icon: "🥺",
 
 title: "Quand tu es triste",
 
-text: `Mon cœur,
+text: `Coucou toi.
 
-Si tu es ici, c'est probablement que tu traverses un petit moment compliqué.
+Si tu as ouvert cette lettre, c'est probablement que tu traverses une journée un peu compliquée.
 
-Alors avant toute chose : respire.
+Alors avant toute chose, respire.
 
-Tu n'as pas besoin de faire semblant d'aller bien.
+Tu n'as pas besoin de faire semblant d'aller bien avec moi.
 
-Tu as le droit d'avoir des journées difficiles.
+Tu as le droit d'avoir des journées où tu n'as pas beaucoup d'énergie. Tu as le droit d'être triste, fatiguée, déçue ou simplement de ne pas avoir envie de sourire.
 
-Tu as le droit d'être fatiguée.
-
-Tu as le droit d'avoir envie de rester tranquille.
-
-Et surtout, tu n'es jamais un poids pour moi simplement parce que tu vas mal.
+Et surtout, tu n'es pas un poids pour moi.
 
 Si tu veux parler, je t'écoute.
 
 Si tu ne veux pas parler, je peux simplement rester là.
 
-J'aimerais tellement pouvoir être à côté de toi dans ces moments-là.
+Tu peux m'envoyer un énorme pavé, un seul mot, un emoji ou même ne rien dire du tout.
 
-Pouvoir te faire sourire.
+Je serai toujours content d'avoir de tes nouvelles.
+
+J'aimerais pouvoir être à côté de toi dans ces moments-là.
+
+Pouvoir te faire rire.
 
 Pouvoir te faire un câlin.
 
-Pouvoir simplement rester avec toi.
+Pouvoir simplement rester près de toi jusqu'à ce que la journée soit un peu plus douce.
 
-Une mauvaise journée ne change pas la personne incroyable que tu es.
+Alors ne sois pas trop dure avec toi-même.
 
-Alors prends ton temps.
+Une mauvaise journée ne définit pas qui tu es.
+
+Elle ne change pas toutes les belles choses qu'il y a chez toi.
+
+Et surtout, elle ne change pas la place que tu as dans ma vie.
+
+Prends ton temps.
 
 Fais quelque chose qui te fait du bien.
 
-Et sois gentille avec toi-même.
+Et rappelle-toi simplement que tu n'es pas seule.
 
-Tu comptes énormément pour moi.
-
-Même quand tu n'as pas envie de sourire.
-
-Même quand tu doutes.
-
-Même quand tu ne te sens pas bien.
-
-Tu restes toi.
-
-Et je tiens énormément à toi.
-
-Je t'aime. ❤️`
+Je tiens énormément à toi. ❤️`
 
 },
 
@@ -1900,47 +3238,53 @@ icon: "😡",
 
 title: "Quand tu es en colère",
 
-text: `Coucou toi.
+text: `Alors...
 
-Alors comme ça tu es énervée ? 😭
+Je crois que quelqu'un est énervé. 😭
 
-Avant toute chose :
+Avant toute chose, respire.
 
-Respire.
-
-Tu as le droit d'être en colère.
-
-Tu as le droit de trouver quelque chose injuste.
+Tu as parfaitement le droit d'être en colère.
 
 Tu as le droit de ne pas être d'accord.
 
-Mais tu n'es pas obligée de tout régler immédiatement.
+Tu as le droit de trouver quelque chose injuste.
 
-Prends quelques minutes.
+Mais tu n'as pas besoin de régler tout immédiatement.
 
-Éloigne-toi de ce qui t'énerve si tu peux.
+Parfois, la meilleure chose à faire est simplement de prendre un peu de recul.
 
-Écoute une musique.
+Laisse retomber la pression.
 
-Fais quelque chose qui te permet de souffler.
+Mets ta musique préférée.
 
-Et quand tu seras prête, tu pourras réfléchir à la suite.
+Va faire autre chose quelques minutes.
 
-Et si tu as besoin de m'en parler...
+Et quand tu seras prête, tu pourras réfléchir à ce que tu veux vraiment dire.
+
+Et si tu veux venir me raconter ce qui t'énerve...
 
 Je t'écoute.
 
-Même si tu dois m'envoyer un énorme pavé.
+Même si ton message fait trois kilomètres.
 
-Même si tu répètes la même chose dix fois.
+Même si tu répètes la même chose.
 
-Même si tu veux simplement te plaindre sans chercher de solution.
+Même si tu veux simplement te plaindre.
 
-Je serai là.
+Je serai là pour écouter.
 
-Maintenant respire encore une fois.
+Et si je suis la personne qui t'a énervée...
 
-Ça va aller. ❤️`
+Alors bon...
+
+Je vais peut-être devoir faire très attention à ce que je dis maintenant. 😭
+
+Mais sache une chose :
+
+Même quand on est énervés, tu comptes toujours énormément pour moi.
+
+❤️`
 
 },
 
@@ -1953,43 +3297,55 @@ title: "Quand tu manques d'amour",
 
 text: `Alors viens ici.
 
-Si tu as ouvert cette lettre parce que tu as besoin d'un peu d'amour, j'espère que ces mots vont réussir à te faire sourire.
+Cette lettre est probablement l'une des plus importantes.
+
+Parce que parfois, on a simplement besoin qu'on nous rappelle qu'on est aimé.
+
+Alors je vais te le rappeler.
 
 Tu es importante.
 
-Tu es aimée.
+Tu comptes.
 
-Et tu n'as pas besoin d'être parfaite pour mériter de l'affection.
+Tu mérites qu'on prenne soin de toi.
+
+Tu mérites de pouvoir être toi-même sans devoir constamment essayer d'être parfaite.
+
+Et tu n'as pas besoin de faire quelque chose d'extraordinaire pour mériter de l'affection.
 
 Tu peux simplement être toi.
 
-J'aime ta façon d'être.
-
 J'aime nos discussions.
 
-J'aime nos petits délires.
+J'aime nos délires.
 
-J'aime les moments complètement normaux qui deviennent finalement importants.
+J'aime nos petits moments.
 
-J'aime les petites attentions.
+J'aime les choses complètement banales qu'on fait ensemble.
 
-J'aime les souvenirs qu'on crée.
+J'aime les petits messages.
 
-Et surtout, j'aime simplement passer du temps avec toi.
+Les petites attentions.
 
-Alors considère cette lettre comme un énorme câlin virtuel.
+Les moments où on rigole pour rien.
+
+Et toutes ces choses que je ne pense pas forcément à dire à chaque fois.
+
+Alors si aujourd'hui tu avais besoin d'un rappel...
+
+Le voici :
+
+Je tiens énormément à toi.
+
+Et même si tu ne peux pas me voir à côté de toi maintenant, imagine simplement un énorme câlin.
 
 🫂
 
-Tu peux revenir ici quand tu veux.
+Garde-le quelques secondes.
 
-Autant de fois que nécessaire.
+Et reviens ici quand tu en auras encore besoin.
 
-Et chaque fois que tu oublies à quel point tu comptes...
-
-Je te le rappellerai.
-
-Je t'aime énormément. ❤️`
+❤️`
 
 },
 
@@ -2000,45 +3356,47 @@ icon: "😴",
 
 title: "Quand tu t'ennuies",
 
-text: `Alors...
+text: `Tu t'ennuies.
 
-Tu t'ennuies ? 👀
+Je le savais.
 
-Et tu as décidé de venir ici.
+Et plutôt que de trouver quelque chose à faire toute seule, tu es venue ouvrir cette lettre.
 
-Très bon choix.
+Très bonne décision. 😭
 
-Mais maintenant il faut trouver quelque chose à faire.
+Alors voici quelques idées :
 
-Tu peux m'envoyer un message complètement inutile.
-
-Tu peux me raconter la première chose qui te passe par la tête.
+Tu peux m'envoyer le premier truc complètement random qui te passe par la tête.
 
 Tu peux me poser une question bizarre.
 
-Tu peux écouter une musique.
+Tu peux aller regarder une vieille conversation et te rappeler d'un moment drôle.
 
-Tu peux regarder quelque chose qui te fait rire.
+Tu peux écouter une musique que tu aimes.
 
-Ou alors tu peux simplement rester ici et relire toutes les lettres.
+Tu peux regarder les photos de nous.
+
+Ou alors...
+
+Tu peux continuer à explorer ce site.
 
 Mais attention.
 
-Si tu lis celle-ci jusqu'au bout...
+Si tu lis absolument toutes les lettres, je considère officiellement que tu es beaucoup trop curieuse.
 
-Tu as officiellement l'obligation de venir me parler après.
+Et si tu arrives jusqu'à la fin de celle-ci...
 
-C'est la règle.
+Tu dois venir me parler.
 
-Je n'ai aucune preuve que cette règle existe.
+C'est une règle.
 
-Mais maintenant elle existe. 😭
+Je viens de l'inventer.
 
-Allez.
+Mais maintenant elle existe.
 
-Va m'embêter.
+Voilà.
 
-❤️`
+Maintenant va m'embêter. 😭❤️`
 
 },
 
@@ -2047,25 +3405,25 @@ hug: {
 
 icon: "🫂",
 
-title: "Quand tu as besoin d'un câlin",
+title: "Quand tu veux un câlin",
 
-text: `Approche.
-
-Oui, toi.
-
-Pas besoin de parler.
+text: `Pas besoin de parler.
 
 Pas besoin d'expliquer.
+
+Pas besoin de raconter ce qui ne va pas.
 
 Imagine simplement que je suis là.
 
 Et que je te fais un énorme câlin.
 
-Un vrai câlin qui dure longtemps.
+Un câlin qui dure longtemps.
 
 Celui où tu peux juste rester tranquille.
 
-Celui où tu n'as pas besoin de penser à tout pendant quelques instants.
+Celui où tu n'as pas besoin de réfléchir.
+
+Celui où tu peux simplement souffler pendant quelques instants.
 
 🫂
 
@@ -2075,21 +3433,19 @@ Reste encore un peu.
 
 ...
 
-Encore un peu.
+Encore un petit peu.
 
 ...
 
-J'espère que ce petit message peut te rappeler que tu peux toujours venir me parler.
+J'espère que tu peux presque l'imaginer.
 
-Alors garde ce petit câlin avec toi.
+Et si tu as encore besoin d'un câlin après cette lettre...
 
-Et si tu en as besoin demain...
+Alors considère que celui-ci était simplement le premier.
 
-Reviens.
+Tu peux revenir quand tu veux.
 
-Il sera encore là.
-
-🫂❤️`
+❤️`
 
 },
 
@@ -2100,17 +3456,11 @@ icon: "🌙",
 
 title: "Quand tu n'arrives pas à dormir",
 
-text: `Il est tard.
+text: `Il est probablement tard.
 
-Tu devrais probablement dormir.
+Et ton cerveau a décidé que c'était exactement le bon moment pour réfléchir à absolument tout. 😭
 
-Mais évidemment...
-
-Tu es ici. 😭
-
-Alors pose ton téléphone quelques secondes après cette lettre.
-
-Respire doucement.
+Alors on va faire une pause.
 
 Tu n'as pas besoin de résoudre les problèmes de demain maintenant.
 
@@ -2122,25 +3472,33 @@ Ta journée est terminée.
 
 Même si elle n'était pas parfaite.
 
-Tu as fait ce que tu pouvais aujourd'hui.
+Même si certaines choses se sont mal passées.
 
-Et c'est déjà bien.
+Tu as fait ce que tu pouvais.
 
-Alors laisse cette journée derrière toi.
+Et maintenant tu peux laisser la journée derrière toi.
 
 Ferme doucement les yeux.
 
+Respire tranquillement.
+
 Pense à quelque chose de calme.
 
-Et laisse ton cerveau arrêter de courir partout.
+Et laisse tes pensées ralentir.
 
-J'espère que tu vas réussir à dormir tranquillement.
+J'espère que tu vas réussir à t'endormir.
 
-Bonne nuit toi. 🌙
+Et si tu lis encore cette phrase au lieu de dormir...
+
+POSE CE TÉLÉPHONE. 😭
+
+Bonne nuit toi.
 
 Fais de beaux rêves.
 
-Et n'oublie pas que quelqu'un pense à toi avant de dormir. ❤️`
+Et n'oublie pas qu'avant de dormir, quelqu'un pense à toi.
+
+🌙❤️`
 
 },
 
@@ -2155,13 +3513,11 @@ text: `Alors...
 
 Je te manque ?
 
-Sache que si tu ressens ce petit manque, c'est simplement parce que tu tiens énormément à moi.
-
-Et tu sais quoi ?
+Je dois t'avouer quelque chose.
 
 Tu me manques aussi.
 
-Il y a des moments où j'aimerais pouvoir simplement être avec toi.
+Il y a des moments où j'aimerais simplement pouvoir être avec toi.
 
 Pas forcément faire quelque chose d'incroyable.
 
@@ -2173,27 +3529,35 @@ Rigoler.
 
 Faire n'importe quoi.
 
-Passer du temps ensemble.
+Partager un moment complètement banal.
 
-Parce que les moments les plus simples deviennent parfois les meilleurs souvenirs.
+Parce que je crois que les meilleurs souvenirs ne sont pas forcément les grands événements.
 
-Alors quand je te manque, pense aussi à tous les moments qu'on a déjà partagés.
+Parfois ce sont simplement les moments où on était ensemble sans avoir besoin de faire quelque chose de spécial.
 
-Les discussions.
+Alors quand je te manque, pense à ça.
 
-Les fous rires.
+Pense à tous les moments qu'on a déjà vécus.
 
-Les petites blagues.
+Et surtout...
 
-Les moments complètement normaux.
+Pense à tous ceux qu'on n'a pas encore vécus.
 
-Et surtout pense à tous ceux qu'on n'a pas encore vécus.
+Il reste tellement de souvenirs à créer.
 
-Cette lettre est peut-être sur un écran...
+Tellement de discussions.
 
-Mais j'espère qu'elle me rendra un tout petit peu plus proche de toi.
+Tellement de fous rires.
 
-Tu me manques aussi. ❤️`
+Tellement de moments où on pourra simplement être ensemble.
+
+Alors oui.
+
+Tu me manques.
+
+Mais ça veut aussi dire qu'on aura encore de beaux moments à attendre.
+
+❤️`
 
 },
 
@@ -2204,13 +3568,13 @@ icon: "🫨",
 
 title: "Quand tu es stressée",
 
-text: `Stop deux secondes.
+text: `Stop.
+
+Deux secondes.
 
 Pose tout.
 
 Respire.
-
-Maintenant.
 
 Inspire doucement.
 
@@ -2228,31 +3592,37 @@ Et avance petit à petit.
 
 Tu n'as pas besoin d'être parfaite.
 
-Tu n'as pas besoin d'avoir toutes les réponses.
+Tu n'as pas besoin d'avoir toutes les réponses immédiatement.
 
-Tu as simplement besoin d'avancer à ton rythme.
+Tu n'as pas besoin de tout réussir du premier coup.
 
-Et si quelque chose te paraît énorme maintenant, découpe-le en petites étapes.
+Si quelque chose te semble énorme, découpe-le.
 
-Une chose.
+Une petite étape.
 
 Puis une autre.
 
 Et encore une autre.
 
-Si tu as besoin d'en parler, viens me voir.
+Et si tu as simplement besoin de parler...
+
+Viens me voir.
 
 Même si tu ne sais pas quoi dire.
 
-Même si tu m'envoies juste :
+Même si tu m'écris juste :
 
 "Je suis stressée."
 
 Je comprendrai.
 
-Alors respire encore une fois.
+Alors respire encore.
 
-Tu peux y arriver. ❤️`
+Tu peux avancer à ton rythme.
+
+Et surtout...
+
+Sois gentille avec toi-même. ❤️`
 
 },
 
@@ -2265,45 +3635,47 @@ title: "Quand tu doutes de toi",
 
 text: `Je sais que parfois tu peux douter de toi.
 
-Peut-être que tu te demandes si tu fais assez.
+Tu peux te demander si tu fais assez.
 
-Peut-être que tu te compares.
+Si tu es assez bien.
 
-Peut-être que tu as peur de ne pas être à la hauteur.
+Si tu vas réussir.
 
-Alors j'aimerais te rappeler quelque chose.
+Et parfois, on devient beaucoup plus dur avec soi-même qu'on ne le serait avec quelqu'un d'autre.
+
+Alors aujourd'hui, j'aimerais te rappeler quelque chose.
 
 Tu n'as pas besoin d'être parfaite.
 
-Tu n'as pas besoin de ressembler à quelqu'un d'autre.
+Tu n'as pas besoin de tout réussir immédiatement.
 
-Tu n'as pas besoin de réussir tout immédiatement.
+Tu n'as pas besoin de ressembler à quelqu'un d'autre.
 
 Tu es toi.
 
-Et c'est justement ça que j'aime.
+Et il y a énormément de petites choses chez toi qui font que tu es unique.
 
-Il y a énormément de petites choses chez toi que tu ne remarques probablement même pas.
-
-Ta façon de parler.
-
-Ta façon de réagir.
+Ta manière de parler.
 
 Ton humour.
 
 Tes petites habitudes.
 
+Tes réactions.
+
 Ta personnalité.
 
-Toutes ces choses qui font que personne ne pourrait simplement te remplacer.
+Toutes ces petites choses que tu ne remarques peut-être même pas.
 
 Alors quand tu doutes...
 
-Rappelle-toi que la personne que tu regardes avec autant de critiques est aussi la personne que quelqu'un peut énormément aimer.
+Essaie de te regarder avec un peu plus de douceur.
+
+Parce que la personne que tu critiques parfois est aussi la personne que quelqu'un peut énormément apprécier et aimer.
 
 Et moi, je tiens énormément à toi.
 
-Ne l'oublie jamais. ❤️`
+Ne l'oublie pas. ❤️`
 
 },
 
@@ -2314,39 +3686,43 @@ icon: "🧠",
 
 title: "Quand tu penses trop",
 
-text: `Ton cerveau est encore parti beaucoup trop loin, hein ? 😭
+text: `Ton cerveau est encore parti beaucoup trop loin, n'est-ce pas ? 😭
 
-Alors on va faire une pause.
+Alors faisons une pause.
 
-Tu n'as pas besoin de résoudre chaque scénario que ton cerveau vient d'inventer.
+Toutes les pensées qui traversent ta tête ne sont pas forcément des vérités.
 
-Toutes les pensées ne sont pas forcément des vérités.
+Parfois notre cerveau invente des scénarios.
 
-Parfois on imagine quelque chose et notre cerveau décide immédiatement que c'est forcément ce qui va arriver.
+Puis il les analyse.
 
-Mais ce n'est pas toujours le cas.
+Puis il imagine encore autre chose.
 
-Alors prends une respiration.
+Et finalement, on se retrouve à réfléchir pendant des heures à quelque chose qui n'est même pas arrivé.
+
+Alors reviens simplement au présent.
 
 Regarde autour de toi.
 
-Reviens simplement au moment présent.
+Respire.
 
 Tu es ici.
 
 Maintenant.
 
-Et tu peux prendre les choses une par une.
+Et tu n'as pas besoin de résoudre chaque possibilité.
 
-Si tu veux me parler de ce qui tourne dans ta tête, fais-le.
+Si quelque chose te préoccupe vraiment, tu pourras y réfléchir calmement.
 
-Tu n'as pas besoin de garder tout ça pour toi.
+Mais pas besoin de tout porter en même temps.
 
-Et si tu veux simplement penser à autre chose...
+Et si tu veux m'en parler...
 
-Je suis là pour ça aussi.
+Je suis là.
 
-Maintenant laisse ton cerveau prendre cinq minutes de vacances.
+Tu n'as pas besoin de garder toutes tes pensées pour toi.
+
+Maintenant laisse ton cerveau prendre quelques minutes de vacances.
 
 Il les mérite. 😭❤️`
 
@@ -2361,27 +3737,27 @@ title: "Quand tu as besoin de motivation",
 
 text: `Écoute-moi bien.
 
-Tu n'as pas besoin d'accomplir absolument tout aujourd'hui.
+Tu n'as pas besoin de tout réussir aujourd'hui.
+
+Tu n'as pas besoin de tout faire parfaitement.
 
 Tu peux avancer petit à petit.
 
-Même une petite étape compte.
+Une petite étape compte.
 
-Même si personne ne la voit.
+Même si personne ne la remarque.
 
-Même si elle te semble insignifiante.
+Même si elle te semble minuscule.
 
-Tu avances.
+Elle compte.
 
-Et c'est ça qui compte.
+Alors si quelque chose te semble énorme, ne regarde pas toute la montagne.
 
-Alors si quelque chose te paraît trop compliqué, commence simplement par la première petite chose.
+Regarde simplement la prochaine étape.
 
-Puis la suivante.
+Puis fais-la.
 
-Ne regarde pas uniquement la montagne entière.
-
-Regarde simplement où tu dois poser le prochain pied.
+Ensuite tu verras la suivante.
 
 Et si aujourd'hui tu n'as pas beaucoup d'énergie...
 
@@ -2389,15 +3765,17 @@ Ce n'est pas grave.
 
 Tu peux recommencer demain.
 
-Tu n'as pas besoin d'être productive tout le temps pour avoir de la valeur.
+Tu n'as pas besoin d'être productive tout le temps.
 
-Prends ton temps.
+Tu as aussi le droit de te reposer.
 
-Crois un peu plus en toi.
+Alors avance à ton rythme.
+
+Crois un petit peu plus en toi.
 
 Et quand tu oublies que tu peux y arriver...
 
-Relis cette lettre.
+Reviens lire cette lettre.
 
 Je crois en toi. ❤️`
 
@@ -2410,33 +3788,33 @@ icon: "🏆",
 
 title: "Quand tu es fière de toi",
 
-text: `STOP.
+text: `ATTENTION.
 
-Cette lettre est uniquement là pour une chose :
+Cette lettre est réservée aux personnes qui viennent de réussir quelque chose. 😌
 
-te rappeler que tu peux être fière de toi.
+Si c'est ton cas...
 
-Si tu viens de réussir quelque chose...
+Alors arrête tout.
 
-Profite.
-
-Si tu as travaillé dur...
-
-Profite.
-
-Si tu as dépassé quelque chose qui te faisait peur...
-
-Profite.
+Et prends quelques secondes pour réaliser ce que tu viens de faire.
 
 Tu as le droit d'être fière.
 
-Tu n'as pas besoin de minimiser ce que tu as accompli.
+Tu as le droit de célébrer.
 
-Même si ça te semble petit.
+Tu as le droit de te dire :
+
+"Oui, j'ai réussi."
+
+Même si ça semble petit.
 
 Même si quelqu'un d'autre trouve ça normal.
 
 Ce qui compte, c'est ce que ça représente pour toi.
+
+Tous les efforts que personne n'a vus comptent aussi.
+
+Toutes les fois où tu as continué alors que tu avais envie d'abandonner comptent aussi.
 
 Alors aujourd'hui...
 
@@ -2446,11 +3824,7 @@ Bien joué.
 
 Je suis fier de toi.
 
-Et j'espère que toi aussi tu peux regarder tout ce que tu as fait et te dire :
-
-"Oui.
-
-J'ai réussi ça."
+Et j'espère que toi aussi tu peux être fière de toi.
 
 🏆❤️`
 
@@ -2465,43 +3839,47 @@ title: "Quand tu veux rire",
 
 text: `Bon.
 
-Je préfère te prévenir.
+Je vais être honnête.
 
-Cette lettre n'a probablement aucune utilité.
+Je ne sais absolument pas pourquoi cette lettre existe.
 
-Mais c'est justement le principe.
+Mais elle existe.
 
-Imagine-moi en train d'essayer d'écrire quelque chose de très sérieux...
+Et maintenant tu es en train de la lire.
 
-Puis d'abandonner parce que j'ai oublié ce que je voulais dire.
+Donc autant continuer. 😭
+
+Imagine-moi en train d'essayer d'écrire quelque chose de très sérieux.
+
+Je commence.
+
+"Ma chère..."
+
+Puis je réfléchis.
+
+Puis j'oublie complètement ce que je voulais dire.
+
+Puis je regarde l'écran.
+
+Puis je décide que cette lettre va parler de mon incapacité à écrire une lettre sérieuse.
 
 Voilà.
 
-Fin de la lettre.
+Magnifique.
 
-...
+Un chef-d'œuvre.
 
-Tu attends quoi ?
-
-😭
-
-Bon ok.
-
-Une dernière chose :
-
-Si tu es en train de lire ça avec un petit sourire...
+Si tu as souri...
 
 J'ai gagné.
 
-Et si tu n'as pas souri...
+Si tu n'as pas souri...
 
-Alors là je vais devoir faire mieux.
+Alors je vais devoir trouver une meilleure blague.
 
-Mais comme je ne suis pas actuellement à côté de toi pour voir ta réaction...
+Mais comme je ne peux pas voir ta réaction...
 
-Je vais simplement décider que tu as ri.
-
-Voilà.
+Je vais simplement décider que tu as rigolé.
 
 Problème réglé.
 
@@ -2520,9 +3898,9 @@ text: `Même quand on n'est pas d'accord...
 
 Même quand on est énervés...
 
-Même quand une discussion ne se passe pas comme prévu...
+Même quand une conversation se passe mal...
 
-Ça ne change pas automatiquement tout ce que je ressens pour toi.
+Ça ne change pas instantanément tout ce que je ressens pour toi.
 
 Une dispute n'efface pas les bons moments.
 
@@ -2532,19 +3910,21 @@ Elle n'efface pas toutes les choses importantes qu'on a partagées.
 
 Alors si on vient de se disputer, j'aimerais simplement qu'on puisse prendre le temps de redescendre.
 
-Pas forcément tout régler en cinq minutes.
+Pas forcément tout régler immédiatement.
 
-Pas forcément trouver immédiatement les bons mots.
+Pas forcément trouver les bons mots directement.
 
-Juste prendre le temps.
+Parfois il faut juste quelques minutes.
+
+Et quand on sera prêts, on pourra parler calmement.
 
 Parce que tu comptes pour moi.
 
-Et je préfère qu'on puisse se parler calmement plutôt que de laisser une mauvaise discussion prendre toute la place.
+Et je préfère qu'on puisse essayer de se comprendre plutôt que de laisser une mauvaise discussion prendre toute la place.
 
-Alors même si aujourd'hui c'est compliqué...
+Même après un moment compliqué...
 
-Je tiens toujours à toi.
+Tu restes importante pour moi.
 
 ❤️`
 
@@ -2559,165 +3939,92 @@ title: "Ce que j'admire chez toi",
 
 text: `Il y a énormément de petites choses chez toi que j'aime.
 
-Ta façon d'être.
+Et certaines sont probablement des choses auxquelles tu ne fais même pas attention.
 
-Ta personnalité.
+J'aime ta façon d'être.
 
-Ton humour.
+J'aime ton humour.
 
-Tes réactions.
+J'aime ta personnalité.
 
-Ta manière de parler.
+J'aime les petites réactions que tu as parfois.
 
-Les petites choses que tu fais sans même t'en rendre compte.
+J'aime nos discussions.
 
-J'aime aussi les moments où tu me surprends.
+J'aime quand on part complètement dans tous les sens.
 
-Les moments où tu me fais rire.
+J'aime les petits moments où tu me fais rire sans forcément essayer.
 
-Les discussions où on part complètement dans tous les sens.
+J'aime aussi toutes ces petites habitudes qui font que tu es simplement toi.
 
-Et surtout, j'aime le fait que tu sois simplement toi.
+Et je pourrais probablement continuer pendant très longtemps.
 
-Je pourrais essayer de faire une liste interminable ici...
+Parce qu'une personne ne se résume pas à une seule qualité.
 
-Mais je pense qu'elle ne serait jamais vraiment terminée.
-
-Parce que plus on passe du temps ensemble, plus je découvre de nouvelles petites choses à aimer.
+Ce sont tous les petits détails qui finissent par la rendre unique.
 
 Alors si un jour tu te demandes ce que j'aime chez toi...
 
-La réponse est probablement :
+La réponse est :
 
-beaucoup trop de choses pour toutes les écrire ici. ❤️`
+beaucoup trop de choses pour toutes les écrire ici.
+
+Et heureusement.
+
+Parce que ça veut dire qu'il me reste encore plein de choses à découvrir. ❤️`
 
 },
 
 
-memories: {
+memoriesLetter: {
 
 icon: "📖",
 
 title: "Nos souvenirs",
 
-text: `Cette page est probablement l'une de mes préférées.
+text: `Je crois que les souvenirs les plus importants ne sont pas toujours les plus impressionnants.
 
-Parce que les souvenirs ne sont pas forcément les grands événements.
-
-Parfois c'est juste une conversation.
+Parfois c'est simplement une conversation.
 
 Un fou rire.
-
-Une blague.
 
 Un message.
 
 Une soirée.
 
-Une journée complètement normale.
+Une journée normale.
+
+Une blague complètement nulle.
 
 Un moment où on était simplement heureux d'être ensemble.
 
-Et avec le temps, ces petits moments deviennent importants.
+Et avec le temps, ces petits moments deviennent précieux.
 
-Alors cette page restera toujours ouverte.
+C'est pour ça que je veux garder une place ici pour eux.
 
-Parce qu'il y aura encore de nouveaux souvenirs.
+Parce qu'il y en aura encore.
 
-Encore des discussions.
+De nouvelles photos.
 
-Encore des fous rires.
+De nouvelles journées.
 
-Encore des moments qu'on ne connaît même pas encore.
+De nouvelles discussions.
 
-Et j'espère qu'un jour, quand on relira tout ça...
+De nouveaux fous rires.
 
-On pourra regarder derrière nous et se dire :
+De nouveaux souvenirs dont on ne connaît même pas encore l'existence.
+
+Et j'espère qu'un jour, quand on regardera tout ça...
+
+On pourra se dire :
 
 "On en a vécu des choses."
 
 Et surtout :
 
-"Ce n'est que le début."
+"Ce n'est pas fini."
 
-✨❤️`
-
-},
-
-
-personal: {
-
-icon: "💌",
-
-title: "Ma touche personnelle",
-
-text: `Bon...
-
-Cette page est différente.
-
-Parce que toutes les autres parlent de ce que tu peux ressentir.
-
-Mais celle-ci...
-
-C'est simplement moi qui te parle.
-
-J'ai créé toutes ces lettres parce que je voulais avoir un endroit où tu pourrais venir quand tu en as besoin.
-
-Quand tu es triste.
-
-Quand tu stresses.
-
-Quand tu t'ennuies.
-
-Quand je te manque.
-
-Quand tu as besoin d'amour.
-
-Mais je voulais surtout que tu aies quelque chose que tu pourrais garder.
-
-Quelque chose que tu pourrais rouvrir plus tard.
-
-Et te dire :
-
-"Il a vraiment fait tout ça pour moi."
-
-Alors oui...
-
-J'ai probablement passé beaucoup trop de temps à faire ce site. 😭
-
-Mais franchement ?
-
-Je ne regrette absolument pas.
-
-Parce que si un jour tu ouvres une de ces lettres alors que tu ne vas pas très bien et qu'elle arrive à te faire sourire ne serait-ce qu'un petit peu...
-
-Alors tout ça aura valu le coup.
-
-Et cette page restera volontairement ouverte.
-
-Parce que je pourrai toujours ajouter quelque chose.
-
-Un nouveau souvenir.
-
-Une nouvelle photo.
-
-Une nouvelle lettre.
-
-Une nouvelle phrase.
-
-Ou même un truc complètement random parce que j'aurai pensé à toi.
-
-Ce site n'est donc pas vraiment terminé.
-
-Il grandira avec tous les moments qu'on vivra.
-
-Et même si ce texte n'est probablement pas parfait...
-
-Il est à moi.
-
-Et maintenant, il est à toi aussi.
-
-Je t'aime. ❤️`
+📖❤️`
 
 }
 
@@ -2725,7 +4032,7 @@ Je t'aime. ❤️`
 
 
 /* =========================================================
-   LOADING
+   LOADER
 ========================================================= */
 
 window.addEventListener("load", () => {
@@ -2733,8 +4040,8 @@ window.addEventListener("load", () => {
     setTimeout(() => {
 
         document
-            .getElementById("loadingScreen")
-            .classList.add("hidden");
+            .getElementById("loader")
+            .classList.add("hide");
 
     }, 1300);
 
@@ -2742,58 +4049,57 @@ window.addEventListener("load", () => {
 
 
 /* =========================================================
-   PARTICULES
+   FLOATING HEARTS
 ========================================================= */
 
-const particles =
-document.getElementById("particles");
+const heartContainer =
+    document.getElementById("hearts");
 
-const particleSymbols = [
+const heartSymbols = [
     "♥",
     "♡",
     "💗",
     "💖",
     "💕",
-    "✨",
-    "·"
+    "✨"
 ];
 
 
-function createParticle() {
+function createFloatingHeart() {
 
-    const particle =
-    document.createElement("div");
+    const heart =
+        document.createElement("div");
 
-    particle.className =
-    "particle";
+    heart.className =
+        "floating-heart";
 
-    particle.textContent =
-    particleSymbols[
-        Math.floor(
-            Math.random() *
-            particleSymbols.length
-        )
-    ];
+    heart.textContent =
+        heartSymbols[
+            Math.floor(
+                Math.random() *
+                heartSymbols.length
+            )
+        ];
 
-    particle.style.left =
-    Math.random() * 100 + "%";
+    heart.style.left =
+        Math.random() * 100 + "%";
 
-    particle.style.fontSize =
-    (10 + Math.random() * 25) + "px";
+    heart.style.fontSize =
+        (10 + Math.random() * 22) + "px";
 
     const duration =
-    7 + Math.random() * 9;
+        7 + Math.random() * 9;
 
-    particle.style.animationDuration =
-    duration + "s";
+    heart.style.animationDuration =
+        duration + "s";
 
-    particles.appendChild(
-        particle
+    heartContainer.appendChild(
+        heart
     );
 
     setTimeout(() => {
 
-        particle.remove();
+        heart.remove();
 
     }, duration * 1000);
 
@@ -2801,541 +4107,189 @@ function createParticle() {
 
 
 setInterval(
-    createParticle,
-    550
+    createFloatingHeart,
+    650
 );
 
 
 /* =========================================================
-   CURSEUR
-========================================================= */
-
-const cursor =
-document.getElementById("cursorGlow");
-
-
-document.addEventListener(
-"mousemove",
-(event) => {
-
-    cursor.animate(
-        {
-            left:
-            event.clientX + "px",
-
-            top:
-            event.clientY + "px"
-        },
-
-        {
-            duration: 500,
-            fill: "forwards"
-        }
-    );
-
-});
-
-
-/* =========================================================
-   MODAL
+   OPEN LETTER
 ========================================================= */
 
 const modal =
-document.getElementById("modal");
+    document.getElementById("modal");
 
 const modalIcon =
-document.getElementById("modalIcon");
+    document.getElementById("modalIcon");
 
 const modalTitle =
-document.getElementById("modalTitle");
+    document.getElementById("modalTitle");
 
 const modalText =
-document.getElementById("modalText");
+    document.getElementById("modalText");
 
-const progressBar =
-document.getElementById("progressBar");
-
-const reading =
-document.getElementById("reading");
-
-let typingInterval;
-
-
-/* =========================================================
-   OUVRIR LETTRE
-========================================================= */
 
 function openLetter(type) {
 
     const letter =
-    letters[type];
+        letters[type];
 
     if (!letter) return;
 
-    clearInterval(
-        typingInterval
-    );
-
     modalIcon.textContent =
-    letter.icon;
+        letter.icon;
 
     modalTitle.textContent =
-    letter.title;
+        letter.title;
 
-    modalText.innerHTML = "";
+    modalText.textContent =
+        letter.text;
 
-    progressBar.style.width =
-    "0%";
-
-    reading.textContent =
-    "lecture...";
-
-    modal.classList.add(
-        "active"
-    );
+    modal.classList.add("open");
 
     document.body.style.overflow =
-    "hidden";
-
-    createHeartBurst();
-
-    typeText(
-        letter.text
-    );
+        "hidden";
 
 }
 
 
 /* =========================================================
-   TEXTE ANIMÉ
+   CLOSE MODAL
 ========================================================= */
 
-function typeText(text) {
+function closeModal() {
 
-    let index = 0;
-
-    const total =
-    text.length;
-
-    const cursor =
-    document.createElement("span");
-
-    cursor.className =
-    "typing-cursor";
-
-
-    typingInterval =
-    setInterval(() => {
-
-        if (index >= total) {
-
-            clearInterval(
-                typingInterval
-            );
-
-            cursor.remove();
-
-            reading.textContent =
-            "lecture terminée 💗";
-
-            return;
-        }
-
-
-        modalText.textContent +=
-        text[index];
-
-        index++;
-
-        modalText.appendChild(
-            cursor
-        );
-
-
-        const percent =
-        (index / total) * 100;
-
-        progressBar.style.width =
-        percent + "%";
-
-
-    }, 10);
-
-}
-
-
-/* =========================================================
-   FERMER LETTRE
-========================================================= */
-
-function closeLetter() {
-
-    clearInterval(
-        typingInterval
-    );
-
-    modal.classList.remove(
-        "active"
-    );
+    modal.classList.remove("open");
 
     document.body.style.overflow =
-    "";
+        "";
 
 }
 
 
 /* =========================================================
-   CLIC EXTÉRIEUR
+   CLICK OUTSIDE
 ========================================================= */
 
 modal.addEventListener(
-"click",
-(event) => {
+    "click",
+    event => {
 
-    if (
-        event.target === modal
-    ) {
+        if (
+            event.target === modal
+        ) {
 
-        closeLetter();
+            closeModal();
+
+        }
 
     }
-
-});
+);
 
 
 /* =========================================================
-   ESCAPE
+   ESC
 ========================================================= */
 
 document.addEventListener(
-"keydown",
-(event) => {
+    "keydown",
+    event => {
 
-    if (
-        event.key === "Escape"
-    ) {
+        if (
+            event.key === "Escape"
+        ) {
 
-        closeLetter();
+            closeModal();
 
-    }
-
-});
-
-
-/* =========================================================
-   EXPLOSION DE COEURS
-========================================================= */
-
-function createHeartBurst() {
-
-    const symbols = [
-        "💗",
-        "💖",
-        "💕",
-        "♥",
-        "✨"
-    ];
-
-
-    for (
-        let i = 0;
-        i < 22;
-        i++
-    ) {
-
-        const heart =
-        document.createElement("div");
-
-        heart.style.position =
-        "fixed";
-
-        heart.style.zIndex =
-        "1000";
-
-        heart.style.left =
-        "50%";
-
-        heart.style.top =
-        "50%";
-
-        heart.style.pointerEvents =
-        "none";
-
-        heart.textContent =
-        symbols[
-            Math.floor(
-                Math.random() *
-                symbols.length
-            )
-        ];
-
-
-        const angle =
-        Math.random() *
-        Math.PI * 2;
-
-        const distance =
-        100 +
-        Math.random() * 300;
-
-        const x =
-        Math.cos(angle) *
-        distance;
-
-        const y =
-        Math.sin(angle) *
-        distance;
-
-
-        heart.animate(
-            [
-                {
-                    transform:
-                    "translate(-50%,-50%) scale(0)",
-
-                    opacity: 0
-                },
-
-                {
-                    transform:
-                    "translate(-50%,-50%) scale(1.2)",
-
-                    opacity: 1,
-
-                    offset: .2
-                },
-
-                {
-                    transform:
-                    `translate(
-                        calc(-50% + ${x}px),
-                        calc(-50% + ${y}px)
-                    )
-                    scale(.7)
-                    rotate(360deg)`,
-
-                    opacity: 0
-                }
-            ],
-
-            {
-                duration:
-                900 +
-                Math.random() * 700,
-
-                easing:
-                "cubic-bezier(.2,.8,.3,1)"
-            }
-        );
-
-
-        document.body.appendChild(
-            heart
-        );
-
-
-        setTimeout(() => {
-
-            heart.remove();
-
-        }, 1800);
+        }
 
     }
-
-}
-
-
-/* =========================================================
-   SURPRISE
-========================================================= */
-
-function showSurprise() {
-
-    modalIcon.textContent =
-    "🎁";
-
-    modalTitle.textContent =
-    "Tu as trouvé la surprise";
-
-
-    modalText.innerHTML = `
-
-<div class="surprise-box">
-
-<div class="surprise-heart">
-    💗
-</div>
-
-<h2>
-    Pour toi.
-</h2>
-
-<p>
-
-Si tu es arrivée jusqu'ici,
-c'est que tu as vraiment tout exploré. 👀
-
-<br><br>
-
-Alors voilà la surprise :
-
-<br><br>
-
-ce site n'est pas simplement une page.
-
-C'est un petit endroit que tu peux garder.
-
-Un endroit où tu peux revenir
-quand tu veux.
-
-<br><br>
-
-Et surtout...
-
-Il n'est pas terminé.
-
-Parce qu'il y aura toujours
-de nouveaux souvenirs,
-de nouvelles photos,
-de nouvelles lettres
-et de nouveaux moments.
-
-<br><br>
-
-Alors garde-le quelque part.
-
-Et reviens-y quand tu veux.
-
-<br><br>
-
-❤️
-
-<br><br>
-
-Je t'aime.
-
-</p>
-
-</div>
-
-`;
-
-
-    progressBar.style.width =
-    "100%";
-
-    reading.textContent =
-    "surprise débloquée 🎁";
-
-    modal.classList.add(
-        "active"
-    );
-
-    document.body.style.overflow =
-    "hidden";
-
-    createHeartBurst();
-
-}
+);
 
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
-function scrollToLetters() {
+function goTo(id) {
 
-    document
-        .getElementById("letters")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    const element =
+        document.getElementById(id);
 
-}
+    if (!element) return;
 
-
-function scrollToPhotos() {
-
-    document
-        .getElementById("photos")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    element.scrollIntoView({
+        behavior: "smooth"
+    });
 
 }
 
 
 /* =========================================================
-   COMPTEUR
+   COUNTER
 ========================================================= */
 
 function updateCounter() {
 
     const now =
-    new Date();
+        new Date();
 
     let difference =
-    now - startDate;
-
+        now - startDate;
 
     if (difference < 0) {
-
         difference = 0;
-
     }
 
-
-    const seconds =
-    Math.floor(
-        difference / 1000
-    );
-
+    const totalSeconds =
+        Math.floor(
+            difference / 1000
+        );
 
     const days =
-    Math.floor(
-        seconds / 86400
-    );
-
+        Math.floor(
+            totalSeconds / 86400
+        );
 
     const hours =
-    Math.floor(
-        (seconds % 86400) /
-        3600
-    );
-
+        Math.floor(
+            (totalSeconds % 86400) / 3600
+        );
 
     const minutes =
-    Math.floor(
-        (seconds % 3600) /
-        60
-    );
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
 
 
-    const secs =
-    seconds % 60;
-
-
-    document.getElementById("days")
+    document
+        .getElementById("days")
         .textContent =
         days;
 
 
-    document.getElementById("hours")
+    document
+        .getElementById("hours")
         .textContent =
         String(hours)
-        .padStart(2,"0");
+            .padStart(2, "0");
 
 
-    document.getElementById("minutes")
+    document
+        .getElementById("minutes")
         .textContent =
         String(minutes)
-        .padStart(2,"0");
+            .padStart(2, "0");
 
 
-    document.getElementById("seconds")
+    document
+        .getElementById("seconds")
         .textContent =
-        String(secs)
-        .padStart(2,"0");
+        String(seconds)
+            .padStart(2, "0");
 
 }
 
@@ -3349,75 +4303,281 @@ setInterval(
 
 
 /* =========================================================
-   TILT DES CARTES
+   RANDOM MESSAGE
+========================================================= */
+
+const randomMessages = [
+
+    "Tu comptes énormément pour moi. ❤️",
+
+    "Même les journées normales sont meilleures quand je peux les partager avec toi.",
+
+    "Je suis vraiment heureux de t'avoir dans ma vie. 💗",
+
+    "Tu es une personne que je n'ai pas envie de perdre de vue.",
+
+    "J'espère qu'un jour on relira tout ça en rigolant.",
+
+    "Un petit rappel : tu es importante pour moi.",
+
+    "Merci simplement d'être toi. ✨",
+
+    "Je garde plein de petits moments avec toi dans ma tête.",
+
+    "Même un petit message de toi peut changer ma journée.",
+
+    "Il reste encore énormément de souvenirs à créer. ❤️",
+
+    "Si tu souris maintenant, alors cette page a réussi sa mission. 😭",
+
+    "Je ne sais pas ce que demain nous réserve, mais j'espère qu'il y aura encore plein de moments à partager."
+
+];
+
+
+let previousMessage = -1;
+
+
+function randomMessage() {
+
+    const element =
+        document.getElementById(
+            "randomMessage"
+        );
+
+    let index;
+
+    do {
+
+        index =
+            Math.floor(
+                Math.random() *
+                randomMessages.length
+            );
+
+    } while (
+        index === previousMessage
+    );
+
+    previousMessage =
+        index;
+
+    element.classList.add(
+        "change"
+    );
+
+
+    setTimeout(() => {
+
+        element.textContent =
+            randomMessages[index];
+
+        element.classList.remove(
+            "change"
+        );
+
+    }, 250);
+
+}
+
+
+/* =========================================================
+   SURPRISE
+========================================================= */
+
+function surprise() {
+
+    modalIcon.textContent =
+        "🎁";
+
+    modalTitle.textContent =
+        "Tu as trouvé la surprise";
+
+    modalText.textContent =
+`Bon...
+
+Si tu es arrivée jusqu'ici, c'est que tu as vraiment exploré le site. 👀
+
+Alors voici ta surprise :
+
+Ce site n'est pas simplement une page avec quelques lettres.
+
+C'est un endroit que tu peux garder.
+
+Un endroit où je peux ajouter des souvenirs.
+
+Des photos.
+
+Des messages.
+
+Des nouvelles lettres.
+
+Des petites choses complètement inutiles.
+
+Et surtout...
+
+Des morceaux de notre histoire.
+
+Il n'est donc pas vraiment terminé.
+
+Parce que notre histoire continue aussi.
+
+Alors garde ce petit endroit quelque part.
+
+Et reviens de temps en temps.
+
+Peut-être qu'une nouvelle surprise sera apparue. 👀
+
+Mais pour l'instant...
+
+Merci d'être arrivée jusqu'ici.
+
+Et surtout...
+
+Je t'aime. ❤️`;
+
+    modal.classList.add("open");
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================================
+   HEART BURST WHEN CLICKING LETTER
 ========================================================= */
 
 document
-.querySelectorAll(".card")
-.forEach(card => {
+    .querySelectorAll(".letter-card")
+    .forEach(card => {
 
-    card.addEventListener(
-    "mousemove",
-    (event) => {
+        card.addEventListener(
+            "click",
+            event => {
 
-        if (
-            window.innerWidth < 700
-        ) return;
+                createBurst(
+                    event.clientX,
+                    event.clientY
+                );
 
-
-        const rect =
-        card.getBoundingClientRect();
-
-
-        const x =
-        event.clientX -
-        rect.left;
-
-
-        const y =
-        event.clientY -
-        rect.top;
-
-
-        const centerX =
-        rect.width / 2;
-
-
-        const centerY =
-        rect.height / 2;
-
-
-        const rotateX =
-        ((y - centerY) /
-        centerY) *
-        -3;
-
-
-        const rotateY =
-        ((x - centerX) /
-        centerX) *
-        3;
-
-
-        card.style.transform =
-        `translateY(-10px)
-         perspective(700px)
-         rotateX(${rotateX}deg)
-         rotateY(${rotateY}deg)`;
+            }
+        );
 
     });
 
 
-    card.addEventListener(
-    "mouseleave",
-    () => {
+function createBurst(x, y) {
 
-        card.style.transform =
-        "";
+    const symbols = [
+        "💗",
+        "💕",
+        "💖",
+        "✨"
+    ];
 
-    });
 
-});
+    for (
+        let i = 0;
+        i < 12;
+        i++
+    ) {
+
+        const item =
+            document.createElement("div");
+
+        item.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
+
+        item.style.position =
+            "fixed";
+
+        item.style.left =
+            x + "px";
+
+        item.style.top =
+            y + "px";
+
+        item.style.zIndex =
+            "10000";
+
+        item.style.pointerEvents =
+            "none";
+
+        const angle =
+            Math.random() *
+            Math.PI *
+            2;
+
+        const distance =
+            70 +
+            Math.random() * 150;
+
+        const dx =
+            Math.cos(angle) *
+            distance;
+
+        const dy =
+            Math.sin(angle) *
+            distance;
+
+
+        item.animate(
+            [
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(0)",
+
+                    opacity: 0
+                },
+
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(1)",
+
+                    opacity: 1
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${dx}px),
+                            calc(-50% + ${dy}px)
+                        )
+                        scale(.6)
+                        rotate(180deg)`,
+
+                    opacity: 0
+                }
+            ],
+            {
+                duration:
+                    700 +
+                    Math.random() * 500,
+
+                easing:
+                    "cubic-bezier(.2,.8,.2,1)"
+            }
+        );
+
+
+        document.body.appendChild(item);
+
+
+        setTimeout(() => {
+
+            item.remove();
+
+        }, 1400);
+
+    }
+
+}
 
 </script>
 
